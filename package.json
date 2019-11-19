@@ -4,9 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "autoprefixer": "^9.7.1",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "node-sass": "^4.13.0",
+    "postcss-loader": "^3.0.0",
+    "precss": "^4.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.0"
+  }
 }

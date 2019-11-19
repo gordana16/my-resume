@@ -1,0 +1,31 @@
+@mixin focus-active {
+  &:focus,
+  &:active {
+    @content;
+  }
+}
+.navbar-nav {
+  .nav-link.nav-link-variant {
+    @include focus-active {
+      background-color: theme-color-level("main", 1);
+    }
+    line-height: 1.5 * $line-height-base;
+  }
+}
+
+//responsive custom newspapers class
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .newspapers#{$infix} {
+      column-count: if(
+        map-get($grid-breakpoints, $breakpoint) > map-get($grid-breakpoints, md),
+        2,
+        1
+      );
+      column-gap: $grid-gutter-width;
+      text-align: justify;
+    }
+  }
+}
