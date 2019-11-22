@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -10,9 +11,17 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist")
   },
-
+  devServer: {
+    //default dir is "/dist"
+    writeToDisk: true
+  },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: "babel-loader"
+      },
       {
         test: /\.scss$/,
         use: [
@@ -28,6 +37,17 @@ module.exports = {
           },
           { loader: "sass-loader" }
         ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]"
+            }
+          }
+        ]
       }
     ]
   },
@@ -35,6 +55,9 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery"
+    }),
+    new HtmlWebpackPlugin({
+      template: "./src/index.html"
     })
   ]
 };

@@ -49,32 +49,51 @@
         </div>
       </nav>
     </header>
-    <div class="container-fluid">
-      <div class="row">
-        <div id="profile-pic" class="col-lg-3">Picture</div>
+    <div class="container">
+      <div class="row pt-4 mt-0 mt-md-2 mt-lg-3">
+        <div class="col-lg-3 ml-lg-n2">
+          <div class="h-100 h-lg-auto bg-white" >
+            <img
+              id="profile-pic"
+              class="profile-pic img-fluid py-4 py-lg-0"
+              src="./profile-pic.jpg"              
+              alt="Profile picture"
+            />
+            
+          </div>
+        </div>
         <div class="col-lg-9">
-          <div class="row">
-            <div id="summary" class="col-lg-8">
+          <div class="row mx-0">
+              <div id="summary" class="col-lg-9 bg-white">            
               <h1>Summary</h1>
-              <p class="newspapers-lg">
+              <p class="text-md-newspapers text-justify">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non
                 sem dignissim, dictum purus luctus, facilisis nunc. Curabitur
                 semper velit odio, vitae dignissim odio rutrum id. In laoreet
                 turpis dui, id gravida turpis condimentum id. Nullam condimentum
                 elementum tortor in mollis. Nunc porttitor odio eget eros
                 fermentum condimentum.
-              </p>
-            </div>
-            <div id="skills" class="col-lg-4">Skills</div>
-            <div id="experience" class="col-lg-8">Experience</div>
-            <div id="education" class="col-lg-8">Education</div>
-            <div id="certificates" class="col-lg-8">Certificates</div>
-            <div id="github-reps" class="col-lg-8">GitHub Reps</div>
+              </p>   
+            </div>     
+           
+          <div id="skills" class="col-lg-3 px-0"> 
+            <div class='p-2 bg-side ml-lg-4 mr-lg-n3'>
+                <h3>Skills</h3>
+                <div class="row">
+                  <div class='col-4 col-lg-12'>coding</div>
+                  <div class='col-4 col-lg-12'>hard-skills</div>
+                  <div class='col-4 col-lg-12'>soft-skills</div>
+                </div>
+            </div>           
+           
           </div>
+          <div id="experience" class="col-lg-10" >Experience</div>
+          <div id="education" class="col-lg-10">Education</div>
+          <div id="certificates" class="col-lg-10">Certificates</div>
+          <div id="github-reps" class="col-lg-10">GitHub Reps</div>
+        
         </div>
       </div>
     </div>
-
-    <script src="bundle.js"></script>
   </body>
 </html>
