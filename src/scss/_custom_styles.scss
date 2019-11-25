@@ -40,7 +40,8 @@
 }
 
 @include media-breakpoint-down(md) {
-  .profile-pic {
+  .profile-pic,
+  .icons {
     max-width: 200px;
     margin: auto;
     display: block;
@@ -66,4 +67,15 @@ h6 {
     font-size: 1.1rem;
     font-weight: 700;
   }
+}
+
+.icons {
+  list-style: none;
+  padding: 0;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  fill: $gray-700;
 }
