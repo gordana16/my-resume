@@ -1,99 +1,103 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resume</title>
-  </head>
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-main">
-        <a class="navbar-brand" href="#">Resume</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarNav"
-        >
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link nav-link-variant" href="#"
-                >Summary<span class="sr-only">(current)</span></a
-              >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume</title>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-main">
+      <a class="navbar-brand" href="#">Resume</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link nav-link-variant" href="#">Summary<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-variant" href="#">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-variant" href="#">Experience</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-variant" href="#">Education</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-variant" href="#">Certificates</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-variant" href="#">GitHub Repos</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+    <div class="row pt-4 mt-0 mt-md-2 mt-lg-3">
+      <div class="col-lg-3 ml-lg-n2">
+        <div class="h-100 h-lg-auto">
+          <img id="profile-pic" class="profile-pic img-fluid" src="./profile-pic.jpg" alt="Profile picture" />
+          <ul class="icons d-flex justify-content-around py-3">
+            <li><svg class="icon linkedin-icon">
+                <use xlink:href="sprite.svg#icon-linkedin-with-circle"></use>
+              </svg>
             </li>
-            <li class="nav-item">
-              <a class="nav-link nav-link-variant" href="#">Skills</a>
+            <li>
+              <svg class="icon github-icon">
+                <use xlink:href="sprite.svg#icon-github-with-circle"></use>
+              </svg>
             </li>
-            <li class="nav-item">
-              <a class="nav-link nav-link-variant" href="#">Experience</a>
+            <li><svg class="icon twitter-icon">
+                <use xlink:href="sprite.svg#icon-twitter-with-circle"></use>
+              </svg>
             </li>
-            <li class="nav-item">
-              <a class="nav-link nav-link-variant" href="#">Education</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-link-variant" href="#">Certificates</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-link-variant" href="#">GitHub Repos</a>
+            <li><svg class="icon mail-icon">
+                <use xlink:href="sprite.svg#icon-mail4"></use>
+              </svg>
             </li>
           </ul>
         </div>
-      </nav>
-    </header>
-    <div class="container">
-      <div class="row pt-4 mt-0 mt-md-2 mt-lg-3">
-        <div class="col-lg-3 ml-lg-n2">
-          <div class="h-100 h-lg-auto bg-white" >
-            <img
-              id="profile-pic"
-              class="profile-pic img-fluid py-4 py-lg-0"
-              src="./profile-pic.jpg"              
-              alt="Profile picture"
-            />
-            
+      </div>
+      <div class="col-lg-9">
+        <div class="row mx-0">
+          <div id="summary" class="col-lg-9 bg-white">
+            <h1>Summary</h1>
+            <p class="text-md-newspapers text-justify">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non
+              sem dignissim, dictum purus luctus, facilisis nunc. Curabitur
+              semper velit odio, vitae dignissim odio rutrum id. In laoreet
+              turpis dui, id gravida turpis condimentum id. Nullam condimentum
+              elementum tortor in mollis. Nunc porttitor odio eget eros
+              fermentum condimentum.
+            </p>
           </div>
-        </div>
-        <div class="col-lg-9">
-          <div class="row mx-0">
-              <div id="summary" class="col-lg-9 bg-white">            
-              <h1>Summary</h1>
-              <p class="text-md-newspapers text-justify">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non
-                sem dignissim, dictum purus luctus, facilisis nunc. Curabitur
-                semper velit odio, vitae dignissim odio rutrum id. In laoreet
-                turpis dui, id gravida turpis condimentum id. Nullam condimentum
-                elementum tortor in mollis. Nunc porttitor odio eget eros
-                fermentum condimentum.
-              </p>   
-            </div>     
-           
-          <div id="skills" class="col-lg-3 px-0"> 
+
+          <div id="skills" class="col-lg-3 px-0">
             <div class='p-2 bg-side ml-lg-4 mr-lg-n3'>
-                <h3>Skills</h3>
-                <div class="row">
-                  <div class='col-4 col-lg-12'>coding</div>
-                  <div class='col-4 col-lg-12'>hard-skills</div>
-                  <div class='col-4 col-lg-12'>soft-skills</div>
-                </div>
-            </div>           
-           
+              <h3>Skills</h3>
+              <div class="row">
+                <div class='col-4 col-lg-12'>coding</div>
+                <div class='col-4 col-lg-12'>hard-skills</div>
+                <div class='col-4 col-lg-12'>soft-skills</div>
+              </div>
+            </div>
+
           </div>
-          <div id="experience" class="col-lg-10" >Experience</div>
+          <div id="experience" class="col-lg-10">Experience</div>
           <div id="education" class="col-lg-10">Education</div>
           <div id="certificates" class="col-lg-10">Certificates</div>
           <div id="github-reps" class="col-lg-10">GitHub Reps</div>
-        
+
         </div>
       </div>
     </div>
-  </body>
+</body>
+
 </html>
