@@ -7,3 +7,13 @@
 // @import "~bootstrap/scss/root";
 // @import "~bootstrap/scss/buttons";
 // @import "~bootstrap/scss/grid";
+
+$xl: map-get($grid-breakpoints, "xl");
+$lg: map-get($grid-breakpoints, "lg");
+
+:export {
+  xl: $xl;
+}
+:export {
+  lg: $lg;
+}

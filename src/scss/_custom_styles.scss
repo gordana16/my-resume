@@ -1,16 +1,10 @@
-@mixin focus-active {
-  &:focus,
-  &:active {
-    @content;
+@import "./_custom_mixins.scss";
+
+.nav-link-variant {
+  @include focus-active {
+    background-color: theme-color-level("main", 1);
   }
-}
-.navbar-nav {
-  .nav-link.nav-link-variant {
-    @include focus-active {
-      background-color: theme-color-level("main", 1);
-    }
-    line-height: 1.5 * $line-height-base;
-  }
+  line-height: 1.5 * $line-height-base;
 }
 
 //responsive custom newspapers text
@@ -39,19 +33,6 @@
   }
 }
 
-@include media-breakpoint-down(md) {
-  .profile-pic,
-  .icons {
-    max-width: 200px;
-    margin: auto;
-    display: block;
-  }
-
-  .bg-side {
-    background-color: $white !important;
-  }
-}
-
 h1,
 h2,
 h3,
@@ -62,11 +43,13 @@ h6 {
   color: $gray-800;
 }
 
-@include media-breakpoint-up(lg) {
-  h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-  }
+h2 {
+  color: $gray-600;
+}
+
+h3 {
+  color: theme-color-level("main");
+  font-weight: 300;
 }
 
 .icons {
@@ -78,4 +61,69 @@ h6 {
   width: 2rem;
   height: 2rem;
   fill: $gray-700;
+  background-color: $white;
+  border-radius: 1rem;
+}
+
+.icon-pdf {
+  border-radius: 1rem;
+  fill: $white;
+  background-color: $gray-700;
+}
+
+.badge {
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background-color: transparent;
+  color: $gray-600;
+}
+.skills-list ul {
+  text-transform: uppercase;
+  list-style-type: none;
+  font-size: 0.75 * $font-size-base;
+}
+
+@include media-breakpoint-up(lg) {
+  h3 {
+    font-size: 1.1rem;
+  }
+  .table td {
+    font-size: 1.1rem;
+  }
+  .skills-badge {
+    transform: rotate(90deg);
+    min-width: 7.5rem;
+  }
+  .badge {
+    width: 100%;
+    border: 1px dashed $gray-600;
+  }
+
+  .alternate-odd {
+    background: theme-color-level("side", 0.5);
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .profile-pic,
+  .icons {
+    max-width: 200px;
+    margin: auto;
+    display: block;
+  }
+
+  .bg-side {
+    background-color: $white !important;
+  }
+
+  .main-row {
+    background-color: $white;
+  }
+  .skills-list ul {
+    font-size: $font-size-base;
+  }
+
+  .badge {
+    font-size: $font-size-base;
+  }
 }
