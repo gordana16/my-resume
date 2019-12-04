@@ -41,10 +41,10 @@
   </header>
   <div class="container">
     <div class="row pt-4 mt-0 mt-md-2 mt-lg-3">
-      <div class="col-lg-3 ml-lg-n2">
+      <div class="col-12 col-lg-3 ml-lg-n2">
         <div class="h-100 h-lg-auto">
           <img id="profile-pic" class="profile-pic img-fluid" src="./profile-pic.jpg" alt="Profile picture" />
-          <ul class="icons d-flex justify-content-around py-3">
+          <ul class="icons d-flex justify-content-around py-3 mx-lg-3">
             <li><svg class="icon linkedin-icon">
                 <use xlink:href="sprite.svg#icon-linkedin-with-circle"></use>
               </svg>
@@ -59,41 +59,77 @@
               </svg>
             </li>
             <li><svg class="icon mail-icon">
-                <use xlink:href="sprite.svg#icon-mail4"></use>
+                <use xlink:href="sprite.svg#icon-mail"></use>
+              </svg>
+            </li>
+            <li><svg class="icon icon-pdf">
+                <use xlink:href="sprite.svg#icon-file-pdf"></use>
               </svg>
             </li>
           </ul>
         </div>
       </div>
-      <div class="col-lg-9">
-        <div class="row mx-0">
+      <div class="col-12 col-lg-9">
+        <div class="row main-row mx-0">
           <div id="summary" class="col-lg-9 bg-white">
-            <h1>Summary</h1>
-            <p class="text-md-newspapers text-justify">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non
-              sem dignissim, dictum purus luctus, facilisis nunc. Curabitur
-              semper velit odio, vitae dignissim odio rutrum id. In laoreet
-              turpis dui, id gravida turpis condimentum id. Nullam condimentum
-              elementum tortor in mollis. Nunc porttitor odio eget eros
-              fermentum condimentum.
-            </p>
-          </div>
-
-          <div id="skills" class="col-lg-3 px-0">
-            <div class='p-2 bg-side ml-lg-4 mr-lg-n3'>
-              <h3>Skills</h3>
-              <div class="row">
-                <div class='col-4 col-lg-12'>coding</div>
-                <div class='col-4 col-lg-12'>hard-skills</div>
-                <div class='col-4 col-lg-12'>soft-skills</div>
-              </div>
+            <div class="py-4">
+              <h1 class="name"></h1>
+              <h2 id="label"></h2>
             </div>
 
+            <p id="basics-summary" class="text-md-newspapers text-left"></p>
+            <div class="row py-4">
+              <div class=" col-12 col-lg-6 ">
+                <table class="table mb-0 mb-lg-3">
+                  <tbody>
+                    <tr>
+                      <th class="w-sm-50 w-lg-25">Name</th>
+                      <td class="name"></td>
+                    </tr>
+                    <tr>
+                      <th class="w-sm-50 w-lg-25">Email</th>
+                      <td id="email"></td>
+                    </tr>
+                    <tr>
+                      <th class="w-sm-50 w-lg-25">Phone</th>
+                      <td id="phone"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class=" col-12 col-lg-6 ">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th class="w-sm-30 w-lg-25">Address</th>
+                      <td id="address" class="pr-lg-0"></td>
+                    </tr>
+                    <tr>
+                      <th class="w-sm-50 w-lg-25">City</th>
+                      <td id="city"></td>
+                    </tr>
+                    <tr>
+                      <th class="w-sm-50 w-lg-25">Region</th>
+                      <td id="region"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          <div id="experience" class="col-lg-10">Experience</div>
-          <div id="education" class="col-lg-10">Education</div>
-          <div id="certificates" class="col-lg-10">Certificates</div>
-          <div id="github-reps" class="col-lg-10">GitHub Reps</div>
+
+          <div id="skills" class="col-12 col-lg-3 px-lg-0 bg-side ml-lg-4 mr-lg-n4">
+            <div class="py-2 pl-2 pr-lg-0">
+              <h3>Professional Skills</h3>
+              <div id="skills-header" class="row py-2 align-items-start">
+              </div>
+            </div>
+          </div>
+
+          <div id="experience" class="col-12 col-lg-9 bg-white">Experience</div>
+          <div id="education" class="col-12 col-lg-9 bg-white">Education</div>
+          <div id="certificates" class="col-12 col-lg-9 bg-white">Certificates</div>
+          <div id="github-reps" class="col-12 col-lg-9 bg-white">GitHub Reps</div>
 
         </div>
       </div>
