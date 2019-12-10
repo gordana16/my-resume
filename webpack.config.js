@@ -66,5 +66,10 @@ module.exports = {
         to: ""
       }
     ])
-  ]
+  ],
+  resolve: {
+    alias: {
+      "jquery-ui": "jquery-ui/ui/effect.js"
+    }
+  }
 };

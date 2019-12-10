@@ -1,10 +1,10 @@
-@import "./_custom_mixins.scss";
-
-.nav-link-variant {
-  @include focus-active {
-    background-color: theme-color-level("main", 1);
-  }
+.navbar {
   line-height: 1.5 * $line-height-base;
+  .nav-item {
+    .nav-link.active {
+      background-color: theme-color-level("main", 3);
+    }
+  }
 }
 
 //responsive custom newspapers text
@@ -33,13 +33,19 @@
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+@mixin headings($from: 1, $to: 6) {
+  @for $i from $from through $to {
+    h#{$i} {
+      @content;
+    }
+  }
+}
+
+@include headings() {
   text-transform: uppercase;
+}
+
+@include headings(1, 2) {
   color: $gray-800;
 }
 
@@ -47,9 +53,13 @@ h2 {
   color: $gray-600;
 }
 
-h3 {
+@include headings(3, 4) {
   color: theme-color-level("main");
   font-weight: 300;
+}
+
+h4 {
+  font-size: 1.1rem;
 }
 
 .icons {
@@ -84,9 +94,6 @@ h3 {
 }
 
 @include media-breakpoint-up(lg) {
-  h3 {
-    font-size: 1.1rem;
-  }
   .table td {
     font-size: 1.1rem;
   }
