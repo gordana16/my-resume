@@ -1,6 +1,34 @@
-import "./scss/index.scss";
+import sizes from "./scss/index.scss";
+import "bootstrap";
+import "jquery-ui";
 import * as resume from "./resume.json";
 import profilePic from "./profile-pic.jpg";
+
+if ($(window).outerWidth() >= parseInt(sizes.lg)) {
+  console.log("wrapping h4", $(window).outerWidth(), sizes.lg);
+  $("#skills-title").wrap("<h4></h4>");
+} else {
+  console.log("wrapping h3", $(window).outerWidth(), sizes.lg);
+  $("#skills-title").wrap("<h3></h3>");
+}
+
+$("body").css("padding-top", $(".navbar").outerHeight());
+
+$(".nav-link").on("click", function() {
+  var $anchor = $(this);
+  $("html, body").animate(
+    {
+      scrollTop: $($anchor.attr("href")).offset().top - 70
+    },
+    800,
+    "easeInOutExpo"
+  );
+  event.preventDefault();
+});
+
+$(".nav-link").on("click", function() {
+  $(".navbar-collapse").collapse("hide");
+});
 
 $("#profile-pic").attr("src", profilePic);
 
