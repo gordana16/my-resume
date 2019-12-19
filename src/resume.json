@@ -1,7 +1,7 @@
 {
   "basics": {
     "name": "Jane Doe",
-    "label": "Programmer",
+    "label": "Front End Web Developer",
     "picture": "",
     "email": "jane@gmail.com",
     "phone": "(912) 555-4321",
@@ -19,18 +19,74 @@
         "network": "Twitter",
         "username": "john",
         "url": "http://twitter.com/john"
+      },
+      {
+        "network": "linkedin",
+        "username": "j",
+        "url": "https://www.linkedin.com/in/jane-doe"
+      },
+      {
+        "network": "github",
+        "username": "",
+        "url": "https://github.com/jane-doe"
       }
     ]
   },
   "work": [
     {
-      "company": "Company",
-      "position": "President",
-      "website": "http://company.com",
-      "startDate": "2013-01-01",
-      "endDate": "2014-01-01",
-      "summary": "Description...",
-      "highlights": ["Started the company"]
+      "company": "Company-2",
+      "position": "Senior Software Engineer",
+      "website": "",
+      "startDate": "January 2013",
+      "endDate": "December 2015",
+      "summary": "",
+      "highlights": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Habitasse platea dictumst quisque sagittis purus. Libero id faucibus nisl tincidunt eget nullam non nisi. In iaculis nunc sed augue lacus. Nibh cras pulvinar mattis nunc. Ultricies lacus sedturpis tincidunt id aliquet risus. Tristique nulla aliquet enim tortor at auctor urna nunc."
+      ]
+    },
+    {
+      "company": "Company-1",
+      "position": "Software Developer",
+      "website": "",
+      "startDate": "February 2010",
+      "endDate": "December 2012",
+      "summary": "",
+      "highlights": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Habitasse platea dictumst quisque sagittis purus. Libero id faucibus nisl tincidunt eget nullam non nisi. In iaculis nunc sed augue lacus. Nibh cras pulvinar mattis nunc. Ultricies lacus sedturpis tincidunt id aliquet risus. Tristique nulla aliquet enim tortor at auctor urna nunc."
+      ]
+    },
+    {
+      "company": "Company-1",
+      "position": "Software Developer",
+      "website": "",
+      "startDate": "February 2010",
+      "endDate": "December 2012",
+      "summary": "",
+      "highlights": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Habitasse platea dictumst quisque sagittis purus. Libero id faucibus nisl tincidunt eget nullam non nisi. In iaculis nunc sed augue lacus. Nibh cras pulvinar mattis nunc. Ultricies lacus sedturpis tincidunt id aliquet risus. Tristique nulla aliquet enim tortor at auctor urna nunc."
+      ]
+    },
+    {
+      "company": "Company-1",
+      "position": "Software Developer",
+      "website": "",
+      "startDate": "February 2010",
+      "endDate": "December 2012",
+      "summary": "",
+      "highlights": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Habitasse platea dictumst quisque sagittis purus. Libero id faucibus nisl tincidunt eget nullam non nisi. In iaculis nunc sed augue lacus. Nibh cras pulvinar mattis nunc. Ultricies lacus sedturpis tincidunt id aliquet risus. Tristique nulla aliquet enim tortor at auctor urna nunc."
+      ]
+    },
+    {
+      "company": "Company-1",
+      "position": "Software Developer",
+      "website": "",
+      "startDate": "February 2010",
+      "endDate": "December 2012",
+      "summary": "",
+      "highlights": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Habitasse platea dictumst quisque sagittis purus. Libero id faucibus nisl tincidunt eget nullam non nisi. In iaculis nunc sed augue lacus. Nibh cras pulvinar mattis nunc. Ultricies lacus sedturpis tincidunt id aliquet risus. Tristique nulla aliquet enim tortor at auctor urna nunc."
+      ]
     }
   ],
   "volunteer": [

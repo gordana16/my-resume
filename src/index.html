@@ -7,7 +7,8 @@
   <title>Resume</title>
 </head>
 
-<body data-spy="scroll" data-target="#cv-navbar" data-offset="105">
+<body data-spy="scroll" data-target="#cv-navbar" data-offset="110" style="position:relative;">
+  <div id="my-mm" style="height: 1mm; display: none"></div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-main fixed-top px-0 px-lg-3">
     <a class="navbar-brand px-2" href="#">Resume</a>
     <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#cv-navbar"
@@ -62,7 +63,7 @@
                 <use xlink:href="sprite.svg#icon-mail"></use>
               </svg>
             </li>
-            <li><svg class="icon icon-pdf">
+            <li><svg id="pdf-icon" class="icon icon-pdf">
                 <use xlink:href="sprite.svg#icon-file-pdf"></use>
               </svg>
             </li>
@@ -77,10 +78,10 @@
               <h2 id="label"></h2>
             </div>
 
-            <p id="basics-summary" class="text-md-newspapers text-left"></p>
-            <div class="row py-4">
+            <p id="basic-summary" class="text-md-newspapers text-left"></p>
+            <div id="table-ignore" class="row py-4">
               <div class=" col-12 col-lg-6 ">
-                <table class="table mb-0 mb-lg-3">
+                <table id="my-table-1" class="table mb-0 mb-lg-3">
                   <tbody>
                     <tr>
                       <th class="w-sm-50 w-lg-25">Name</th>
@@ -94,11 +95,15 @@
                       <th class="w-sm-50 w-lg-25">Phone</th>
                       <td id="phone"></td>
                     </tr>
+                    <tr class="d-none">
+                      <th>LinkedIn</th>
+                      <td id="linkedIn"></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
               <div class=" col-12 col-lg-6 ">
-                <table class="table">
+                <table id="my-table-2" class="table">
                   <tbody>
                     <tr>
                       <th class="w-sm-30 w-lg-25">Address</th>
@@ -112,6 +117,10 @@
                       <th class="w-sm-50 w-lg-25">Region</th>
                       <td id="region"></td>
                     </tr>
+                    <tr class="d-none">
+                      <th>Github</th>
+                      <td id="github-t"></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -121,52 +130,14 @@
           <div id="skills" class="col-12 col-lg-3 px-lg-0 bg-side ml-lg-4 mr-lg-n4">
             <div class="py-2 pl-2 pr-lg-0">
               <span id="skills-title">Professional Skills</span>
-              <div id="skills-header" class="row py-2 align-items-start">
+              <div id="skills-list" class="row py-2 align-items-start">
               </div>
             </div>
           </div>
 
           <div id="experience" class="col-12 col-lg-9 bg-white">
             <h3>Experience</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. At varius vel pharetra vel. Turpis tincidunt id aliquet risus. Vitae suscipit tellus
-              mauris a. Scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis. Gravida in fermentum et
-              sollicitudin ac orci phasellus egestas tellus. Quisque sagittis purus sit amet volutpat consequat mauris
-              nunc congue. Tincidunt lobortis feugiat vivamus at augue eget. Et egestas quis ipsum suspendisse ultrices
-              gravida. Integer enim neque volutpat ac tincidunt vitae semper quis. Malesuada proin libero nunc consequat
-              interdum varius sit. Phasellus faucibus scelerisque eleifend donec pretium vulputate. Suspendisse sed nisi
-              lacus sed. Senectus et netus et malesuada fames ac turpis egestas. Molestie nunc non blandit massa enim
-              nec
-              dui nunc. Et tortor consequat id porta nibh venenatis cras. Lorem ipsum dolor sit amet. Posuere ac ut
-              consequat semper viverra.</p>
-          </div>
-          <div id="education" class="col-12 col-lg-9 bg-white">
-            <h3>Education</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. At varius vel pharetra vel. Turpis tincidunt id aliquet risus. Vitae suscipit tellus
-              mauris a. Scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis. Gravida in fermentum et
-              sollicitudin ac orci phasellus egestas tellus. Quisque sagittis purus sit amet volutpat consequat mauris
-              nunc congue. Tincidunt lobortis feugiat vivamus at augue eget. Et egestas quis ipsum suspendisse ultrices
-              gravida. Integer enim neque volutpat ac tincidunt vitae semper quis. Malesuada proin libero nunc consequat
-              interdum varius sit. Phasellus faucibus scelerisque eleifend donec pretium vulputate. Suspendisse sed nisi
-              lacus sed. Senectus et netus et malesuada fames ac turpis egestas. Molestie nunc non blandit massa enim
-              nec
-              dui nunc. Et tortor consequat id porta nibh venenatis cras. Lorem ipsum dolor sit amet. Posuere ac ut
-              consequat semper viverra.</p>
-          </div>
-          <div id="certificates" class="col-12 col-lg-9 bg-white">
-            <h3>Certificates</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Ac orci phasellus
-              egestas tellus rutrum tellus. Pellentesque elit eget gravida cum sociis natoque penatibus. Libero justo
-              laoreet sit amet cursus sit amet dictum. In massa tempor nec feugiat nisl. Proin sagittis nisl rhoncus
-              mattis rhoncus urna. Pellentesque massa placerat duis ultricies lacus sed. Nulla posuere sollicitudin
-              aliquam ultrices. Aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices. Vel risus commodo
-              viverra maecenas accumsan lacus vel facilisis. Ut sem viverra aliquet eget sit amet. Et malesuada fames ac
-              turpis egestas sed tempus. Cras ornare arcu dui vivamus arcu. Pharetra et ultrices neque ornare.
-              Pellentesque habitant morbi tristique senectus et netus et malesuada. Leo vel orci porta non pulvinar
-              neque laoreet suspendisse interdum. Duis convallis convallis tellus id.Leo vel orci porta non pulvinar
-              neque laoreet suspendisse interdum. Duis convallis convallis tellus id.</p>
+            <div id="experience-list" class="mt-4"></div>
           </div>
           <div id="github" class="col-12 col-lg-9 bg-white">
             <h3>GitHub Reps</h3>
