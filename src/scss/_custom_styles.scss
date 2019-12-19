@@ -41,7 +41,7 @@
   }
 }
 
-@include headings() {
+@include headings(1, 4) {
   text-transform: uppercase;
 }
 
