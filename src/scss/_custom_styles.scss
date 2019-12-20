@@ -65,6 +65,10 @@ h4 {
 .icons {
   list-style: none;
   padding: 0;
+
+  svg {
+    cursor: pointer;
+  }
 }
 
 .icon {
