@@ -4,6 +4,7 @@ import "jquery-ui";
 import "./createPdf/htmlToPdf";
 import * as resume from "./resume.json";
 import profilePic from "./profile-pic.jpg";
+import { DH_CHECK_P_NOT_SAFE_PRIME } from "constants";
 
 if ($(window).outerWidth() >= parseInt(sizes.lg)) {
   $("#skills-title").wrap("<h4></h4>");
@@ -13,6 +14,7 @@ if ($(window).outerWidth() >= parseInt(sizes.lg)) {
 
 $("body").css("padding-top", $(".navbar").outerHeight());
 
+//smooth scrolling
 $(".nav-link").on("click", function() {
   var $anchor = $(this);
   $("html, body").animate(
@@ -29,6 +31,7 @@ $(".nav-link").on("click", function() {
   $(".navbar-collapse").collapse("hide");
 });
 
+//summary
 $("#profile-pic").attr("src", profilePic);
 
 $("#basic-summary").html(resume.basics.summary);
@@ -82,3 +85,37 @@ $.each(resume.work, (index, exp) => {
 </div>`).appendTo($jobs);
 });
 $jobs.appendTo($("#experience-list"));
+
+//education
+let $eduList = $("<div class='pl-0'></div>");
+$.each(resume.education, (index, edu) => {
+  $(`<div class="mb-5">
+  <h5>${edu.institution}</h5>
+  <h6>${edu.area}</h6>  
+</div>`).appendTo($eduList);
+});
+$eduList.appendTo($("#education-list"));
+
+//certificates
+let $certs = $("<div class='pl-0'></div>");
+$.each(resume.certificates, (index, cert) => {
+  $(`<div class="mb-5">
+  <h5>${cert.title}</h5> 
+</div>`).appendTo($certs);
+});
+$certs.appendTo($("#certificates-list"));
+
+//languages
+let $languages = $("<div class='pl-0'></div>");
+$.each(resume.languages, (index, l) => {
+  $(`<div class="mb-5">
+  <h5>${l.language}</h5> 
+  <h6>${l.fluency}</h6> 
+</div>`).appendTo($languages);
+});
+$languages.appendTo($("#languages-list"));
+
+//gitHub repos
+$.getJSON("https://api.github.com/users/gordana16/repos", repos => {
+  console.log("repos", repos);
+});

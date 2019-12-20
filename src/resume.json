@@ -56,78 +56,30 @@
       ]
     },
     {
-      "company": "Company-1",
+      "company": "Company-3",
       "position": "Software Developer",
       "website": "",
-      "startDate": "February 2010",
-      "endDate": "December 2012",
-      "summary": "",
-      "highlights": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Habitasse platea dictumst quisque sagittis purus. Libero id faucibus nisl tincidunt eget nullam non nisi. In iaculis nunc sed augue lacus. Nibh cras pulvinar mattis nunc. Ultricies lacus sedturpis tincidunt id aliquet risus. Tristique nulla aliquet enim tortor at auctor urna nunc."
-      ]
-    },
-    {
-      "company": "Company-1",
-      "position": "Software Developer",
-      "website": "",
-      "startDate": "February 2010",
-      "endDate": "December 2012",
-      "summary": "",
-      "highlights": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Habitasse platea dictumst quisque sagittis purus. Libero id faucibus nisl tincidunt eget nullam non nisi. In iaculis nunc sed augue lacus. Nibh cras pulvinar mattis nunc. Ultricies lacus sedturpis tincidunt id aliquet risus. Tristique nulla aliquet enim tortor at auctor urna nunc."
-      ]
-    },
-    {
-      "company": "Company-1",
-      "position": "Software Developer",
-      "website": "",
-      "startDate": "February 2010",
-      "endDate": "December 2012",
+      "startDate": "April 2007",
+      "endDate": "November 2009",
       "summary": "",
       "highlights": [
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Habitasse platea dictumst quisque sagittis purus. Libero id faucibus nisl tincidunt eget nullam non nisi. In iaculis nunc sed augue lacus. Nibh cras pulvinar mattis nunc. Ultricies lacus sedturpis tincidunt id aliquet risus. Tristique nulla aliquet enim tortor at auctor urna nunc."
       ]
     }
   ],
-  "volunteer": [
-    {
-      "organization": "Organization",
-      "position": "Volunteer",
-      "website": "http://organization.com/",
-      "startDate": "2012-01-01",
-      "endDate": "2013-01-01",
-      "summary": "Description...",
-      "highlights": ["Awarded 'Volunteer of the Month'"]
-    }
-  ],
+
   "education": [
     {
-      "institution": "University",
+      "institution": "University of California",
       "area": "Software Development",
-      "studyType": "Bachelor",
+      "studyType": "Bachelor of Science",
       "startDate": "2011-01-01",
       "endDate": "2013-01-01",
-      "gpa": "4.0",
-      "courses": ["DB1101 - Basic SQL"]
+      "gpa": "",
+      "courses": []
     }
   ],
-  "awards": [
-    {
-      "title": "Award",
-      "date": "2014-11-01",
-      "awarder": "Company",
-      "summary": "There is no spoon."
-    }
-  ],
-  "publications": [
-    {
-      "name": "Publication",
-      "publisher": "Company",
-      "releaseDate": "2014-10-01",
-      "website": "http://publication.com",
-      "summary": "Description..."
-    }
-  ],
+
   "skills": [
     {
       "name": "Coding",
@@ -155,22 +107,17 @@
       "keywords": ["Attention to Detail", "Problem Solving", "Teamwork"]
     }
   ],
+  "certificates": [
+    {
+      "title": "Microsoft Azure Developer Associate",
+      "date": "April 2015",
+      "expires": ""
+    }
+  ],
   "languages": [
     {
       "language": "English",
       "fluency": "Native speaker"
-    }
-  ],
-  "interests": [
-    {
-      "name": "Wildlife",
-      "keywords": ["Ferrets", "Unicorns"]
-    }
-  ],
-  "references": [
-    {
-      "name": "Jane Doe",
-      "reference": "Reference..."
     }
   ]
 }
