@@ -111,7 +111,7 @@ h4 {
   }
 
   .alternate-odd {
-    background: theme-color-level("side", 0.5);
+    background: theme-color-level("side", 0.9);
   }
 }
 
@@ -123,12 +123,11 @@ h4 {
     display: block;
   }
 
-  .bg-side {
-    background-color: $white !important;
-  }
-
   .main-row {
     background-color: $white;
+  }
+  #skills {
+    background-color: $white !important;
   }
   .skills-list ul {
     font-size: $font-size-base;
