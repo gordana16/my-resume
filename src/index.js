@@ -116,6 +116,27 @@ $.each(resume.languages, (index, l) => {
 $languages.appendTo($("#languages-list"));
 
 //gitHub repos
-$.getJSON("https://api.github.com/users/gordana16/repos", repos => {
-  console.log("repos", repos);
+$.getJSON("https://api.github.com/users/gordana16/repos", gitRepos => {
+  let $repos = $(`<div class="row mt-4"></div>`);
+  const actualRepos = gitRepos
+    .filter(repo => !repo.archived)
+    .sort((r1, r2) => {
+      return new Date(r2.created_at) - new Date(r1.created_at);
+    });
+  $.each(actualRepos, (index, repo) => {
+    $(`<div class="col-md-6">
+    <div class="card mb-4 bg-side">
+    <div class="card-body">
+        <h5 class="card-title">${repo.name}</h5>
+        <p class="card-text">${repo.description || ""}</p>
+        <a href=${
+          repo.html_url
+        } class="btn btn-main" target="_blank">See repo</a>
+      </div>
+    </div>
+    </div>
+    `).appendTo($repos);
+  });
+
+  $repos.appendTo($("#github"));
 });
