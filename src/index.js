@@ -2,7 +2,7 @@ import sizes from "./scss/index.scss";
 import "bootstrap";
 import "jquery-ui";
 import "./createPdf/htmlToPdf";
-import * as resume from "./resume.json";
+import { resume } from "./config";
 import profilePic from "./profile-pic.jpg";
 import { DH_CHECK_P_NOT_SAFE_PRIME } from "constants";
 
@@ -33,20 +33,48 @@ $(".nav-link").on("click", function() {
 
 //summary
 $("#profile-pic").attr("src", profilePic);
-
 $("#basic-summary").html(resume.basics.summary);
 $(".name").html(resume.basics.name);
 $("#label").html(resume.basics.label);
 $("#email").html(resume.basics.email);
 $("#phone").html(resume.basics.phone);
-$("#linkedIn").html(
-  resume.basics.profiles.find(profile => profile["network"] === "linkedin").url
+
+const mergeStringIntoObjArr = (someString, objToken, ...keys) => {
+  const merged = {};
+  return someString.split(",").map(prop => {
+    const values = prop.split(objToken);
+    let localMerged = {};
+    localMerged = keys.reduce(
+      (obj, key, index) => ({ ...obj, [key]: values[index] }),
+      {}
+    );
+    return { ...merged, ...localMerged };
+  });
+};
+
+const profiles = mergeStringIntoObjArr(
+  resume.basics.profiles,
+  "&",
+  "network",
+  "url"
 );
+profiles.push({ network: "email", url: `mailto:${resume.basics.email}` });
+
+$(".icons a").on("click", function() {
+  const networkClass = this.className;
+
+  this.href = profiles.find(profile => profile["network"] === networkClass).url;
+});
+
+$(".mail").on("click", function() {
+  this.href = `mailto:${resume.basics.email}`;
+});
+
 $("#address").html(resume.basics.location.address);
 $("#city").html(resume.basics.location.city);
 $("#region").html(resume.basics.location.region);
 $("#github-t").html(
-  resume.basics.profiles.find(profile => profile["network"] === "github").url
+  profiles.find(profile => profile["network"] === "github").url
 );
 
 //skills

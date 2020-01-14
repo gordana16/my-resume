@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   entry: {
@@ -65,7 +66,8 @@ module.exports = {
         from: "./src/sprite.svg",
         to: ""
       }
-    ])
+    ]),
+    new Dotenv()
   ],
   resolve: {
     alias: {
