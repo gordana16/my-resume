@@ -37,7 +37,6 @@
     "jquery-ui": "^1.12.1",
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.2.11",
-    "netlify-lambda": "^1.6.3",
     "popper.js": "^1.16.0"
   }
 }
