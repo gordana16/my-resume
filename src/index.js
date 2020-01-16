@@ -4,7 +4,6 @@ import "jquery-ui";
 import "./createPdf/htmlToPdf";
 import { resume } from "./config";
 import profilePic from "./profile-pic.jpg";
-import { DH_CHECK_P_NOT_SAFE_PRIME } from "constants";
 
 if ($(window).outerWidth() >= parseInt(sizes.lg)) {
   $("#skills-title").wrap("<h4></h4>");
@@ -31,6 +30,7 @@ $(".nav-link").on("click", function() {
   $(".navbar-collapse").collapse("hide");
 });
 
+console.log("env", process.env.NODE_ENV);
 //summary
 $("#profile-pic").attr("src", profilePic);
 $("#basic-summary").html(resume.basics.summary);
