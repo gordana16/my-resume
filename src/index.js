@@ -30,7 +30,6 @@ $(".nav-link").on("click", function() {
   $(".navbar-collapse").collapse("hide");
 });
 
-console.log("env", process.env.NODE_ENV);
 //summary
 $("#profile-pic").attr("src", profilePic);
 $("#basic-summary").html(resume.basics.summary);
