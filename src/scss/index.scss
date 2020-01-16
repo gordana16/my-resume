@@ -1,12 +1,6 @@
 @import "custom_variables.scss";
 @import "~bootstrap/scss/bootstrap";
 @import "custom_styles.scss";
-// @import "~bootstrap/scss/functions";
-// @import "~bootstrap/scss/variables";
-// @import "~bootstrap/scss/mixins";
-// @import "~bootstrap/scss/root";
-// @import "~bootstrap/scss/buttons";
-// @import "~bootstrap/scss/grid";
 
 $xl: map-get($grid-breakpoints, "xl");
 $lg: map-get($grid-breakpoints, "lg");
