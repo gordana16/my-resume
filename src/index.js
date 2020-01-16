@@ -59,13 +59,13 @@ const stringToArr = someString => {
 const profiles = mergeStringIntoObjArr(
   resume.basics.profiles,
   "network",
-  "url"
+  "url",
+  "username"
 );
 profiles.push({ network: "email", url: `mailto:${resume.basics.email}` });
 
 $(".icons a").on("click", function() {
   const networkClass = this.className;
-
   this.href = profiles.find(profile => profile["network"] === networkClass).url;
 });
 
@@ -171,7 +171,9 @@ $.each(languages, (index, l) => {
 $languages.appendTo($("#languages"));
 
 //gitHub repos
-$.getJSON("https://api.github.com/users/gordana16/repos", gitRepos => {
+const username = profiles.find(profile => profile["network"] === "github")
+  .username;
+$.getJSON(`https://api.github.com/users/${username}/repos`, gitRepos => {
   let $repos = $(`<div class="row mt-4"></div>`);
   const actualRepos = gitRepos
     .filter(repo => !repo.archived)
