@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
@@ -8,14 +9,15 @@ module.exports = {
   entry: {
     app: "./src/index.js"
   },
-  mode: "development",
+  // mode: "development",
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist")
   },
   devServer: {
     //default dir is "/dist"
-    writeToDisk: true
+    // writeToDisk: true
+    open: true
   },
   module: {
     rules: [
@@ -58,6 +60,7 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery"
     }),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./src/index.html"
     }),
@@ -73,5 +76,9 @@ module.exports = {
     alias: {
       "jquery-ui": "jquery-ui/ui/effect.js"
     }
+  },
+  performance: {
+    maxEntrypointSize: 1000000,
+    maxAssetSize: 1000000
   }
 };

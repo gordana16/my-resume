@@ -39,22 +39,26 @@ $("#label").html(resume.basics.label);
 $("#email").html(resume.basics.email);
 $("#phone").html(resume.basics.phone);
 
-const mergeStringIntoObjArr = (someString, objToken, ...keys) => {
+const mergeStringIntoObjArr = (someString, ...keys) => {
   const merged = {};
-  return someString.split(",").map(prop => {
-    const values = prop.split(objToken);
+  return someString.split(/,(?!\s)/).map(str => {
+    const values = str.split(/&(?!\s)/);
     let localMerged = {};
     localMerged = keys.reduce(
-      (obj, key, index) => ({ ...obj, [key]: values[index] }),
+      (obj, key, i) => ({ ...obj, [key]: values[i] }),
       {}
     );
     return { ...merged, ...localMerged };
   });
 };
 
+const stringToArr = someString => {
+  const result = someString.split(/\|(?!\s)/);
+  return result;
+};
+
 const profiles = mergeStringIntoObjArr(
   resume.basics.profiles,
-  "&",
   "network",
   "url"
 );
@@ -78,12 +82,13 @@ $("#github-t").html(
 );
 
 //skills
-$.each(resume.skills, (index, skill) => {
+const skills = mergeStringIntoObjArr(resume.skills, "name", "keywords");
+$.each(skills, (index, skill) => {
   let $label = $(
     `<span class="badge badge-pill badge-main pl-2">${skill.name}</span>`
   );
   let $list = $("<ul class='pl-2 pl-lg-0 mr-lg-n4'></ul>");
-  $.each(skill.keywords, (index, keyword) => {
+  $.each(stringToArr(skill.keywords), (index, keyword) => {
     $(`<li><span>${keyword}</span></li>`).appendTo($list);
   });
 
@@ -103,45 +108,68 @@ $.each(resume.skills, (index, skill) => {
 $(".skills-list ul li:nth-child(odd)").addClass("alternate-odd");
 
 //work-experience
-let $jobs = $("<div class='pl-0'></div>");
-$.each(resume.work, (index, exp) => {
-  $(`<div class="mb-5">
+const work = mergeStringIntoObjArr(
+  resume.work,
+  "company",
+  "position",
+  "startDate",
+  "endDate",
+  "highlights"
+);
+
+let $jobs = $("#experience-list");
+$.each(work, (index, exp) => {
+  const highlights = stringToArr(exp.highlights).map(
+    highlight => `<p class="mt-1 mb-0">${highlight}</p>`
+  );
+  $(`<div class="mb-3">
   <h5>${exp.company}</h5>
   <h6>${exp.position}</h6>
-  <time>${exp.startDate} - ${exp.endDate}</time>
-  <p class="mt-1">${exp.highlights}</p>
-</div>`).appendTo($jobs);
+  <p class="start-end mb-0">${exp.startDate} - ${exp.endDate}</p>
+  ${highlights.join(" ")} 
+  </div>`).appendTo($jobs);
 });
-$jobs.appendTo($("#experience-list"));
+$jobs.appendTo($("#experience"));
 
 //education
-let $eduList = $("<div class='pl-0'></div>");
-$.each(resume.education, (index, edu) => {
-  $(`<div class="mb-5">
-  <h5>${edu.institution}</h5>
-  <h6>${edu.area}</h6>  
-</div>`).appendTo($eduList);
+const education = mergeStringIntoObjArr(
+  resume.education,
+  "institution",
+  "area",
+  "studyType"
+);
+
+let $eduList = $("#education-list");
+$.each(education, (index, edu) => {
+  $(`<div class="mb-3">
+  <h5>${edu.studyType}, ${edu.area}</h5> 
+  <h6>${edu.institution}</h6>  
+  </div>`).appendTo($eduList);
 });
-$eduList.appendTo($("#education-list"));
+$eduList.appendTo($("#education"));
 
 //certificates
-let $certs = $("<div class='pl-0'></div>");
-$.each(resume.certificates, (index, cert) => {
-  $(`<div class="mb-5">
-  <h5>${cert.title}</h5> 
-</div>`).appendTo($certs);
+const certificates = mergeStringIntoObjArr(resume.certificates, "title");
+let $certs = $("#certificates-list");
+$.each(certificates, (index, cert) => {
+  $(`<h5>${cert.title}</h5>`).appendTo($certs);
 });
-$certs.appendTo($("#certificates-list"));
+$certs.appendTo($("#certificates"));
 
 //languages
-let $languages = $("<div class='pl-0'></div>");
-$.each(resume.languages, (index, l) => {
-  $(`<div class="mb-5">
+const languages = mergeStringIntoObjArr(
+  resume.languages,
+  "language",
+  "fluency"
+);
+let $languages = $("#languages-list");
+$.each(languages, (index, l) => {
+  $(`<div class="mb-3">
   <h5>${l.language}</h5> 
   <h6>${l.fluency}</h6> 
 </div>`).appendTo($languages);
 });
-$languages.appendTo($("#languages-list"));
+$languages.appendTo($("#languages"));
 
 //gitHub repos
 $.getJSON("https://api.github.com/users/gordana16/repos", gitRepos => {
