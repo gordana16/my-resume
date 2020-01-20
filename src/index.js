@@ -3,6 +3,7 @@ import "bootstrap";
 import "jquery-ui";
 import "./createPdf/htmlToPdf";
 import { resume } from "./config";
+import { mergeStringIntoObjArr, stringToArr } from "./utils";
 import profilePic from "./profile-pic.jpg";
 
 if ($(window).outerWidth() >= parseInt(sizes.lg)) {
@@ -38,24 +39,6 @@ $("#label").html(resume.basics.label);
 $("#email").html(resume.basics.email);
 $("#phone").html(resume.basics.phone);
 
-const mergeStringIntoObjArr = (someString, ...keys) => {
-  const merged = {};
-  return someString.split(/,(?!\s)/).map(str => {
-    const values = str.split(/&(?!\s)/);
-    let localMerged = {};
-    localMerged = keys.reduce(
-      (obj, key, i) => ({ ...obj, [key]: values[i] }),
-      {}
-    );
-    return { ...merged, ...localMerged };
-  });
-};
-
-const stringToArr = someString => {
-  const result = someString.split(/\|(?!\s)/);
-  return result;
-};
-
 const profiles = mergeStringIntoObjArr(
   resume.basics.profiles,
   "network",
@@ -78,6 +61,9 @@ $("#city").html(resume.basics.location.city);
 $("#region").html(resume.basics.location.region);
 $("#github-t").html(
   profiles.find(profile => profile["network"] === "github").url
+);
+$("#linkedIn-t").html(
+  profiles.find(profile => profile["network"] === "linkedin").url
 );
 
 //skills
