@@ -1,10 +1,9 @@
 import * as jsPDF from "jspdf";
 import parser from "../ResumeParser";
 import "jspdf-autotable";
-import "./fonts/EBGaramond-bold";
-import "./fonts/EBGaramond-normal";
-import "./fonts/CormorantGaramond-normal";
-import "./fonts/CormorantGaramond-bold";
+// import "./fonts/Lato-Regular-bold";
+// import "./fonts/Lato-Regular-normal";
+// import "./fonts/Lato-Light-normal";
 
 //colors
 const color = {
@@ -15,8 +14,7 @@ const color = {
 
 //fonts
 const font = {
-  REGULAR: "EBGaramond",
-  LIGHT: "CormorantGaramond"
+  REGULAR: "times"
 };
 
 //render text to pdf with given properties, takes care about adding the new page while keeping the text on the same page
@@ -95,7 +93,7 @@ const insertTitle = title => {
   const props = [];
   props.push({
     contents: title,
-    fontSize: 18,
+    fontSize: 16,
     fontColor: color.BLUE,
     marginBottom: 10
   });
@@ -104,7 +102,7 @@ const insertTitle = title => {
 
 $("#pdf-icon").on("click", () => {
   const pdf = new jsPDF("p", "pt", "a4");
-  pdf.setFontSize(14);
+  pdf.setFontSize(12);
   pdf.setFont(font.REGULAR, "normal");
   let finalY = 0;
   const margins = {
@@ -128,13 +126,12 @@ $("#pdf-icon").on("click", () => {
     contents: parser.parseLabel().toUpperCase(),
     fontSize: 24,
     fontColor: color.LIGHT_GREY,
-    fontType: font.LIGHT,
     marginBottom: 10
   });
 
   props.push({
     contents: parser.parseSummary(),
-    fontSize: 14,
+    fontSize: 12,
     marginBottom: 5
   });
 
@@ -153,7 +150,6 @@ $("#pdf-icon").on("click", () => {
     margin: { left: margins.width / 2 + margins.left + 10 },
     styles: { font: font.REGULAR, fontStyle: "normal" }
   });
-
   finalY = pdf.previousAutoTable.finalY;
   props.length = 0;
 
@@ -177,7 +173,7 @@ $("#pdf-icon").on("click", () => {
     body: rows,
     startY: finalY - 10,
     headStyles: { font: font.REGULAR, fontStyle: "bold" },
-    styles: { font: font.REGULAR, fontStyle: "normal" }
+    styles: { font: font.REGULAR, fontStyle: "normal", cellPadding: 2 }
   });
 
   finalY = pdf.previousAutoTable.finalY;
@@ -190,20 +186,20 @@ $("#pdf-icon").on("click", () => {
     }
     props.push({
       contents: job.company,
-      fontSize: 16,
+      fontSize: 12,
       fontStyle: "bold"
     });
-    props.push({ contents: job.position, fontSize: 14 });
+    props.push({ contents: job.position, fontSize: 12 });
     props.push({
       contents: `${job.startDate} - ${job.endDate}`,
-      fontSize: 12,
+      fontSize: 10,
       marginBottom: 5
     });
     const highlights = job.highlights;
     highlights.forEach((highlight, i) =>
       props.push({
         contents: highlight,
-        fontSize: 14,
+        fontSize: 12,
         marginBottom:
           index == jobs.length - 1 ? 0 : i < highlights.length - 1 ? 0 : 10
       })
@@ -219,12 +215,12 @@ $("#pdf-icon").on("click", () => {
   $.each(education, (index, edu) => {
     props.push({
       contents: `${edu.institution}, ${edu.area}`,
-      fontSize: 14,
+      fontSize: 12,
       fontStyle: "bold"
     });
     props.push({
       contents: edu.studyType,
-      fontSize: 14,
+      fontSize: 12,
       marginBottom: index == education.length - 1 ? 0 : 5
     });
   });
@@ -237,7 +233,7 @@ $("#pdf-icon").on("click", () => {
   $.each(certificates, (index, cert) => {
     props.push({
       contents: cert.title,
-      fontSize: 14,
+      fontSize: 12,
       fontStyle: "bold",
       marginBottom: index == certificates.length - 1 ? 0 : 5
     });
@@ -251,7 +247,7 @@ $("#pdf-icon").on("click", () => {
   $.each(languages, (index, lang) => {
     props.push({
       contents: lang.language,
-      fontSize: 14,
+      fontSize: 12,
       fontStyle: "bold"
     });
     props.push({
