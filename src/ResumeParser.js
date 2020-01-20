@@ -11,12 +11,28 @@ class ResumeParser {
     instance = this;
   }
 
-  getSkills() {
-    return mergeStringIntoObjArr(resume.skills, "name", "keywords");
+  parseName() {
+    return resume.basics.name;
   }
 
-  getWorkExperience() {
-    return mergeStringIntoObjArr(
+  parseLabel() {
+    return resume.basics.label;
+  }
+
+  parseSummary() {
+    return resume.basics.summary;
+  }
+
+  parseSkills() {
+    const skills = mergeStringIntoObjArr(resume.skills, "name", "keywords");
+    return skills.map(skill => ({
+      ...skill,
+      keywords: stringToArr(skill.keywords)
+    }));
+  }
+
+  parseWorkExperience() {
+    const exps = mergeStringIntoObjArr(
       resume.work,
       "company",
       "position",
@@ -24,9 +40,13 @@ class ResumeParser {
       "endDate",
       "highlights"
     );
+    return exps.map(exp => ({
+      ...exp,
+      highlights: stringToArr(exp.highlights)
+    }));
   }
 
-  getEducation() {
+  parseEducation() {
     return mergeStringIntoObjArr(
       resume.education,
       "institution",
@@ -35,11 +55,11 @@ class ResumeParser {
     );
   }
 
-  getCertificates() {
+  parseCertificates() {
     return mergeStringIntoObjArr(resume.certificates, "title");
   }
 
-  getLanguages() {
+  parseLanguages() {
     return mergeStringIntoObjArr(resume.languages, "language", "fluency");
   }
 }

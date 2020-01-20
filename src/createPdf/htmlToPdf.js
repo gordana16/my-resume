@@ -1,13 +1,10 @@
 import * as jsPDF from "jspdf";
-import { resume } from "../config";
 import parser from "../ResumeParser";
-import { mergeStringIntoObjArr, stringToArr } from "../utils";
 import "jspdf-autotable";
 import "./fonts/EBGaramond-bold";
 import "./fonts/EBGaramond-normal";
 import "./fonts/CormorantGaramond-normal";
 import "./fonts/CormorantGaramond-bold";
-import ResumeParser from "../ResumeParser";
 
 //colors
 const color = {
@@ -22,8 +19,9 @@ const font = {
   LIGHT: "CormorantGaramond"
 };
 
+//render text to pdf with given properties, takes care about adding the new page while keeping the text on the same page
 const renderText = (doc, props, y, margins) => {
-  const details = props.map(prop => {
+  const chunks = props.map(prop => {
     let {
       contents,
       fontType,
@@ -52,7 +50,7 @@ const renderText = (doc, props, y, margins) => {
       fontColor: fontColor
     };
   });
-  const heights = details.map(detail => detail.height);
+  const heights = chunks.map(chunk => chunk.height);
   const totalHeight = heights.reduce((total, val) => total + val, 0);
 
   if (
@@ -63,18 +61,18 @@ const renderText = (doc, props, y, margins) => {
     y = margins.top;
   }
 
-  details.forEach(detail => {
+  chunks.forEach(chunk => {
     doc
-      .setFont(detail.fontType, detail.fontStyle)
-      .setFontSize(detail.fontSize)
-      .setTextColor(detail.fontColor)
-      .text(margins.left, y, detail.lines);
-    y += detail.height;
+      .setFont(chunk.fontType, chunk.fontStyle)
+      .setFontSize(chunk.fontSize)
+      .setTextColor(chunk.fontColor)
+      .text(margins.left, y, chunk.lines);
+    y += chunk.height;
   });
   return y;
 };
 
-const renderFooter = (doc, margins, content) => {
+const renderFooter = (doc, margins, contents) => {
   const pageCount = doc.internal.getNumberOfPages();
   doc.setFontSize(10).setTextColor(color.LIGHT_GREY);
   for (let i = 1; i <= pageCount; i++) {
@@ -93,6 +91,17 @@ const renderFooter = (doc, margins, content) => {
   }
 };
 
+const insertTitle = title => {
+  const props = [];
+  props.push({
+    contents: title,
+    fontSize: 18,
+    fontColor: color.BLUE,
+    marginBottom: 10
+  });
+  return props;
+};
+
 $("#pdf-icon").on("click", () => {
   const pdf = new jsPDF("p", "pt", "a4");
   pdf.setFontSize(14);
@@ -107,7 +116,7 @@ $("#pdf-icon").on("click", () => {
 
   const props = [];
 
-  const name = resume.basics.name;
+  const name = parser.parseName();
   props.push({
     contents: name.toUpperCase(),
     fontSize: 28,
@@ -116,7 +125,7 @@ $("#pdf-icon").on("click", () => {
   });
 
   props.push({
-    contents: resume.basics.label.toUpperCase(),
+    contents: parser.parseLabel().toUpperCase(),
     fontSize: 24,
     fontColor: color.LIGHT_GREY,
     fontType: font.LIGHT,
@@ -124,7 +133,7 @@ $("#pdf-icon").on("click", () => {
   });
 
   props.push({
-    contents: resume.basics.summary,
+    contents: parser.parseSummary(),
     fontSize: 14,
     marginBottom: 5
   });
@@ -147,21 +156,17 @@ $("#pdf-icon").on("click", () => {
 
   finalY = pdf.previousAutoTable.finalY;
   props.length = 0;
-  props.push({
-    contents: "PROFESSIONAL SKILLS",
-    fontSize: 18,
-    fontColor: color.BLUE,
-    marginBottom: 0
-  });
+
+  props.push(...insertTitle("PROFESSIONAL SKILLS"));
 
   finalY = renderText(pdf, props, finalY + 40, margins);
 
   let columns = [];
   let rows = [];
-  const skills = parser.getSkills();
+  const skills = parser.parseSkills();
   $.each(skills, (columnIndex, skill) => {
     columns.push(skill.name.toUpperCase());
-    $.each(stringToArr(skill.keywords), (rowIndex, keyword) => {
+    $.each(skill.keywords, (rowIndex, keyword) => {
       if (!rows[rowIndex]) rows[rowIndex] = [];
       rows[rowIndex][columnIndex] = keyword;
     });
@@ -170,23 +175,18 @@ $("#pdf-icon").on("click", () => {
   pdf.autoTable({
     head: [columns],
     body: rows,
-    startY: finalY,
+    startY: finalY - 10,
     headStyles: { font: font.REGULAR, fontStyle: "bold" },
     styles: { font: font.REGULAR, fontStyle: "normal" }
   });
 
   finalY = pdf.previousAutoTable.finalY;
 
-  const jobs = parser.getWorkExperience();
+  const jobs = parser.parseWorkExperience();
   $.each(jobs, (index, job) => {
     props.length = 0;
     if (index == 0) {
-      props.push({
-        contents: "EXPERIENCE",
-        fontSize: 18,
-        fontColor: color.BLUE,
-        marginBottom: 10
-      });
+      props.push(...insertTitle("EXPERIENCE"));
     }
     props.push({
       contents: job.company,
@@ -199,7 +199,7 @@ $("#pdf-icon").on("click", () => {
       fontSize: 12,
       marginBottom: 5
     });
-    const highlights = stringToArr(job.highlights);
+    const highlights = job.highlights;
     highlights.forEach((highlight, i) =>
       props.push({
         contents: highlight,
@@ -213,14 +213,9 @@ $("#pdf-icon").on("click", () => {
   });
 
   //education
-  const education = parser.getEducation();
+  const education = parser.parseEducation();
   props.length = 0;
-  props.push({
-    contents: "EDUCATION",
-    fontSize: 18,
-    fontColor: color.BLUE,
-    marginBottom: 10
-  });
+  props.push(...insertTitle("EDUCATION"));
   $.each(education, (index, edu) => {
     props.push({
       contents: `${edu.institution}, ${edu.area}`,
@@ -236,14 +231,9 @@ $("#pdf-icon").on("click", () => {
   finalY = renderText(pdf, props, finalY + 30, margins);
 
   //certificates
-  const certificates = parser.getCertificates();
+  const certificates = parser.parseCertificates();
   props.length = 0;
-  props.push({
-    contents: "CERTIFICATES",
-    fontSize: 18,
-    fontColor: color.BLUE,
-    marginBottom: 10
-  });
+  props.push(...insertTitle("CERTIFICATES"));
   $.each(certificates, (index, cert) => {
     props.push({
       contents: cert.title,
@@ -255,14 +245,9 @@ $("#pdf-icon").on("click", () => {
   finalY = renderText(pdf, props, finalY + 30, margins);
 
   //LANGUAGES
-  const languages = parser.getLanguages();
+  const languages = parser.parseLanguages();
   props.length = 0;
-  props.push({
-    contents: "LANGUAGES",
-    fontSize: 18,
-    fontColor: color.BLUE,
-    marginBottom: 10
-  });
+  props.push(...insertTitle("LANGUAGES"));
   $.each(languages, (index, lang) => {
     props.push({
       contents: lang.language,
