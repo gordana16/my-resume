@@ -86,7 +86,7 @@ const renderFooter = (doc, margins, contents) => {
     endX -= doc.getTextWidth(pageLabel);
     y += margins.bottom / 2;
     doc.setPage(i);
-    doc.text(startX, y, content);
+    doc.text(startX, y, contents);
     doc.text(endX, y, pageLabel);
   }
 };
