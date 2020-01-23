@@ -15,8 +15,36 @@ class ResumeParser {
     return resume.basics.name;
   }
 
+  getFirstName() {
+    const name = resume.basics.name;
+    return name.substring(0, name.indexOf(" "));
+  }
+
+  getLastName() {
+    const name = resume.basics.name;
+    return name.substring(name.indexOf(" ") + 1);
+  }
+
   parseLabel() {
     return resume.basics.label;
+  }
+  getEmail() {
+    return resume.basics.email;
+  }
+
+  getPhone() {
+    return resume.basics.phone;
+  }
+
+  getWebsite() {
+    return resume.basics.website;
+  }
+
+  getAddress() {
+    return resume.basics.location.address;
+  }
+  getCity() {
+    return resume.basics.location.city;
   }
 
   parseSummary() {
@@ -61,6 +89,15 @@ class ResumeParser {
 
   parseLanguages() {
     return mergeStringIntoObjArr(resume.languages, "language", "fluency");
+  }
+
+  parseProfiles() {
+    return mergeStringIntoObjArr(
+      resume.basics.profiles,
+      "network",
+      "url",
+      "username"
+    );
   }
 }
 export default new ResumeParser();
