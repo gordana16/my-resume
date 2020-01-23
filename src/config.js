@@ -2,10 +2,9 @@ export const resume = {
   basics: {
     name: process.env.NAME,
     label: process.env.LABEL,
-    picture: "",
     email: process.env.EMAIL,
     phone: process.env.PHONE,
-    website: "",
+    website: process.env.WEBSITE,
     summary: process.env.SUMMARY,
     location: {
       address: process.env.ADDRESS,

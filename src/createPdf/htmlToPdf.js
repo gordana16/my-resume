@@ -1,9 +1,6 @@
 import * as jsPDF from "jspdf";
 import parser from "../ResumeParser";
 import "jspdf-autotable";
-// import "./fonts/Lato-Regular-bold";
-// import "./fonts/Lato-Regular-normal";
-// import "./fonts/Lato-Light-normal";
 
 //colors
 const color = {
@@ -17,8 +14,61 @@ const font = {
   REGULAR: "times"
 };
 
+//render one line of text to pdf with given properties of chunks which make up the line. Font size and font style should be set before the function gets called, otherwise the last set font size will be taken.
+const renderTextLine = (
+  doc,
+  props,
+  y,
+  margins,
+  halign,
+  delim = " ",
+  delimColor = color.DARK_GREY
+) => {
+  const chunks = props.map(prop => {
+    let { contents, fontColor } = prop;
+    if (typeof contents == "undefined") return y;
+    if (typeof fontColor == "undefined") fontColor = color.DARK_GREY;
+    return {
+      contents: contents,
+      fontColor: fontColor,
+      width: doc.getTextWidth(prop.contents)
+    };
+  });
+
+  const widths = chunks.map(chunk => chunk.width);
+  const textWidth = widths.reduce(
+    (total, val) => total + val,
+    doc.getTextWidth(" ") * (widths.length - 1)
+  );
+  //horizontal alignment
+  let xOffset = margins.left; //default, left
+  if (halign === "center") {
+    xOffset = doc.internal.pageSize.width / 2 - textWidth / 2;
+  } else if (halign === "right") {
+    xOffset = doc.internal.pageSize.width - margins.left - textWidth;
+  }
+
+  const lineHeight = doc.getFontSize() * doc.getLineHeightFactor();
+
+  chunks.forEach((chunk, index) => {
+    doc
+      .setTextColor(chunk.fontColor)
+      .setFontStyle("normal")
+      .text(xOffset, y, chunk.contents);
+    if (index < chunks.length - 1) {
+      xOffset += chunk.width;
+      doc
+        .setTextColor(delimColor)
+        .setFontStyle("bold")
+        .text(xOffset, y, delim);
+      xOffset += doc.getTextWidth(delim);
+    }
+  });
+  return y + lineHeight;
+};
+
 //render text to pdf with given properties, takes care about adding the new page while keeping the text on the same page
-const renderText = (doc, props, y, margins) => {
+const renderText = (doc, props, x, y, margins) => {
   const chunks = props.map(prop => {
     let {
       contents,
@@ -64,7 +114,7 @@ const renderText = (doc, props, y, margins) => {
       .setFont(chunk.fontType, chunk.fontStyle)
       .setFontSize(chunk.fontSize)
       .setTextColor(chunk.fontColor)
-      .text(margins.left, y, chunk.lines);
+      .text(x, y, chunk.lines);
     y += chunk.height;
   });
   return y;
@@ -111,51 +161,85 @@ $("#pdf-icon").on("click", () => {
     left: 40,
     width: pdf.internal.pageSize.getWidth() - 2 * 40
   };
-
+  console.log(pdf);
+  console.log(pdf.getFontList());
   const props = [];
 
   const name = parser.parseName();
-  props.push({
-    contents: name.toUpperCase(),
-    fontSize: 28,
-    fontColor: color.BLUE,
-    marginBottom: 5
-  });
+  const firstName = parser.getFirstName().toUpperCase();
+  const lastName = parser.getLastName().toUpperCase();
+  props.push(
+    { contents: firstName, fontColor: color.BLUE },
+    { contents: lastName }
+  );
+  pdf.setFontSize(26);
+  finalY = renderTextLine(pdf, props, 50, margins, "center");
 
-  props.push({
-    contents: parser.parseLabel().toUpperCase(),
-    fontSize: 24,
-    fontColor: color.LIGHT_GREY,
-    marginBottom: 10
-  });
+  pdf.setFontSize(12);
 
+  props.length = 0;
+  props.push({ contents: parser.getEmail() });
+  props.push({ contents: `${parser.getAddress()}, ${parser.getCity()}` });
+  props.push({ contents: parser.getPhone() });
+
+  finalY = renderTextLine(
+    pdf,
+    props,
+    finalY,
+    margins,
+    "center",
+    " | ",
+    color.BLUE
+  );
+
+  props.length = 0;
+  const profiles = parser.parseProfiles();
+  const linkedIn = profiles.find(profile => profile["network"] === "linkedin")
+    .url;
+  const github = profiles.find(profile => profile["network"] === "github").url;
+  props.push({ contents: `LinkedIn: ${linkedIn}` });
+  props.push({ contents: `Github: ${github}` });
+  finalY = renderTextLine(
+    pdf,
+    props,
+    finalY,
+    margins,
+    "center",
+    " | ",
+    color.BLUE
+  );
+
+  props.length = 0;
+  props.push({ contents: `Portfolio: ${parser.getWebsite()}` });
+  finalY = renderTextLine(pdf, props, finalY, margins, "center");
+
+  props.length = 0;
+  props.push(...insertTitle("SUMMARY"));
   props.push({
     contents: parser.parseSummary(),
     fontSize: 12,
     marginBottom: 5
   });
+  const summaryMargins = { ...margins, width: margins.width / 2 - 20 };
+  const finalYSummary = renderText(
+    pdf,
+    props,
+    margins.left,
+    finalY + 40,
+    summaryMargins
+  );
 
-  finalY = renderText(pdf, props, margins.top, margins);
-
-  pdf.autoTable({
-    html: "#my-table-1",
-    startY: finalY + 10,
-    // margin: { right: 305 },
-    margin: { right: margins.width / 2 + margins.left + 10 },
-    styles: { font: font.REGULAR, fontStyle: "normal" }
-  });
-  pdf.autoTable({
-    html: "#my-table-2",
-    startY: finalY + 10,
-    margin: { left: margins.width / 2 + margins.left + 10 },
-    styles: { font: font.REGULAR, fontStyle: "normal" }
-  });
-  finalY = pdf.previousAutoTable.finalY;
   props.length = 0;
 
   props.push(...insertTitle("PROFESSIONAL SKILLS"));
 
-  finalY = renderText(pdf, props, finalY + 40, margins);
+  const startYSkills = renderText(
+    pdf,
+    props,
+    margins.width / 2 + 50,
+    finalY + 40,
+    margins
+  );
 
   let columns = [];
   let rows = [];
@@ -171,12 +255,34 @@ $("#pdf-icon").on("click", () => {
   pdf.autoTable({
     head: [columns],
     body: rows,
-    startY: finalY - 10,
-    headStyles: { font: font.REGULAR, fontStyle: "bold" },
-    styles: { font: font.REGULAR, fontStyle: "normal", cellPadding: 2 }
+    startY: startYSkills - 10,
+    margin: { left: margins.width / 2 + 50 },
+    headStyles: {
+      font: font.REGULAR,
+      fontStyle: "bold",
+      fontSize: 9,
+      textColor: [255, 255, 255],
+      fillColor: [22, 161, 185],
+      halign: "center",
+      lineWidth: 1,
+      lineColor: [248, 249, 250]
+    },
+    styles: {
+      font: font.REGULAR,
+      fontSize: 10,
+      fontStyle: "normal",
+      cellPadding: { top: 3, right: 5, bottom: 3, left: 10 },
+      fillColor: [248, 249, 250],
+      fontSize: 9,
+      textColor: [0, 0, 0]
+    },
+    alternateRowStyles: {
+      fillColor: [248, 249, 250]
+    }
   });
 
-  finalY = pdf.previousAutoTable.finalY;
+  const finalYSkills = pdf.previousAutoTable.finalY;
+  finalY = finalYSummary > finalYSkills ? finalYSummary : finalYSkills;
 
   const jobs = parser.parseWorkExperience();
   $.each(jobs, (index, job) => {
@@ -205,7 +311,7 @@ $("#pdf-icon").on("click", () => {
       })
     );
     const startY = index > 0 ? finalY : finalY + 40;
-    finalY = renderText(pdf, props, startY, margins);
+    finalY = renderText(pdf, props, margins.left, startY, margins);
   });
 
   //education
@@ -224,7 +330,7 @@ $("#pdf-icon").on("click", () => {
       marginBottom: index == education.length - 1 ? 0 : 5
     });
   });
-  finalY = renderText(pdf, props, finalY + 30, margins);
+  finalY = renderText(pdf, props, margins.left, finalY + 30, margins);
 
   //certificates
   const certificates = parser.parseCertificates();
@@ -238,7 +344,7 @@ $("#pdf-icon").on("click", () => {
       marginBottom: index == certificates.length - 1 ? 0 : 5
     });
   });
-  finalY = renderText(pdf, props, finalY + 30, margins);
+  finalY = renderText(pdf, props, margins.left, finalY + 30, margins);
 
   //LANGUAGES
   const languages = parser.parseLanguages();
@@ -255,7 +361,7 @@ $("#pdf-icon").on("click", () => {
       marginBottom: index == languages.length - 1 ? 0 : 5
     });
   });
-  finalY = renderText(pdf, props, finalY + 30, margins);
+  finalY = renderText(pdf, props, margins.left, finalY + 30, margins);
 
   renderFooter(pdf, margins, name);
 
