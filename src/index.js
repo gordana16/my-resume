@@ -101,7 +101,6 @@ const work = mergeStringIntoObjArr(
   "endDate",
   "highlights"
 );
-
 let $jobs = $("#experience-list");
 $.each(work, (index, exp) => {
   const highlights = stringToArr(exp.highlights).map(

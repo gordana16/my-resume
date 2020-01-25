@@ -9,11 +9,6 @@ const color = {
   BLUE: "#16a1b9"
 };
 
-//fonts
-const font = {
-  REGULAR: "times"
-};
-
 //render one line of text to pdf with given properties of chunks which make up the line. Font size and font style should be set before the function gets called, otherwise the last set font size will be taken.
 const renderTextLine = (
   doc,
@@ -29,8 +24,8 @@ const renderTextLine = (
     if (typeof contents == "undefined") return y;
     if (typeof fontColor == "undefined") fontColor = color.DARK_GREY;
     return {
-      contents: contents,
-      fontColor: fontColor,
+      contents,
+      fontColor,
       width: doc.getTextWidth(prop.contents)
     };
   });
@@ -72,30 +67,34 @@ const renderText = (doc, props, x, y, margins) => {
   const chunks = props.map(prop => {
     let {
       contents,
-      fontType,
+      fontName,
       fontStyle,
       fontSize,
       fontColor,
-      marginBottom
+      marginBottom,
+      printed
     } = prop;
     if (typeof contents == "undefined") return y;
-    if (typeof fontType == "undefined") fontType = font.REGULAR;
+    if (typeof fontName == "undefined") fontName = "times";
     if (typeof fontStyle == "undefined") fontStyle = "normal";
     if (typeof fontSize == "undefined") fontSize = doc.getFontSize();
     if (typeof fontColor == "undefined") fontColor = color.DARK_GREY;
     if (typeof marginBottom == "undefined") marginBottom = 0;
+    if (typeof printed == "undefined") printed = true;
 
     const lines = doc.splitTextToSize(contents, margins.width, {
-      fontSize: fontSize
+      fontSize,
+      fontName
     });
     const lineHeight = fontSize * doc.getLineHeightFactor();
     return {
-      lines: lines,
+      lines,
       height: lineHeight * lines.length + marginBottom,
-      fontType: fontType,
-      fontStyle: fontStyle,
-      fontSize: fontSize,
-      fontColor: fontColor
+      fontName,
+      fontStyle,
+      fontSize,
+      fontColor,
+      printed
     };
   });
   const heights = chunks.map(chunk => chunk.height);
@@ -110,8 +109,9 @@ const renderText = (doc, props, x, y, margins) => {
   }
 
   chunks.forEach(chunk => {
+    if (!chunk.printed) return;
     doc
-      .setFont(chunk.fontType, chunk.fontStyle)
+      .setFont(chunk.fontName, chunk.fontStyle)
       .setFontSize(chunk.fontSize)
       .setTextColor(chunk.fontColor)
       .text(x, y, chunk.lines);
@@ -139,13 +139,13 @@ const renderFooter = (doc, margins, contents) => {
   }
 };
 
-const insertTitle = title => {
+const insertTitle = (title, fontSize, fontColor, marginBottom = 0) => {
   const props = [];
   props.push({
     contents: title,
-    fontSize: 16,
-    fontColor: color.BLUE,
-    marginBottom: 10
+    fontSize: fontSize,
+    fontColor: fontColor,
+    marginBottom: marginBottom
   });
   return props;
 };
@@ -153,7 +153,7 @@ const insertTitle = title => {
 $("#pdf-icon").on("click", () => {
   const pdf = new jsPDF("p", "pt", "a4");
   pdf.setFontSize(12);
-  pdf.setFont(font.REGULAR, "normal");
+  pdf.setFont("times", "normal");
   let finalY = 0;
   const margins = {
     top: 80,
@@ -161,8 +161,6 @@ $("#pdf-icon").on("click", () => {
     left: 40,
     width: pdf.internal.pageSize.getWidth() - 2 * 40
   };
-  console.log(pdf);
-  console.log(pdf.getFontList());
   const props = [];
 
   const name = parser.parseName();
@@ -214,110 +212,146 @@ $("#pdf-icon").on("click", () => {
   finalY = renderTextLine(pdf, props, finalY, margins, "center");
 
   props.length = 0;
-  props.push(...insertTitle("SUMMARY"));
+  props.push(...insertTitle("SUMMARY", 16, color.BLUE, 10));
   props.push({
     contents: parser.parseSummary(),
     fontSize: 12,
     marginBottom: 5
   });
-  const summaryMargins = { ...margins, width: margins.width / 2 - 20 };
-  const finalYSummary = renderText(
-    pdf,
-    props,
-    margins.left,
-    finalY + 40,
-    summaryMargins
-  );
 
+  const startYSummary = finalY + 40;
+  finalY = renderText(pdf, props, margins.left, startYSummary, {
+    ...margins,
+    width: (3 / 4) * margins.width - margins.left
+  });
   props.length = 0;
 
-  props.push(...insertTitle("PROFESSIONAL SKILLS"));
+  props.push(...insertTitle("SKILLS", 14, color.DARK_GREY));
 
-  const startYSkills = renderText(
+  //excluding finalY from calculations of vertical position during table printing
+  let finalYTable = renderText(
     pdf,
     props,
-    margins.width / 2 + 50,
-    finalY + 40,
+    margins.left + (3 / 4) * margins.width,
+    startYSummary,
     margins
   );
 
-  let columns = [];
-  let rows = [];
   const skills = parser.parseSkills();
-  $.each(skills, (columnIndex, skill) => {
-    columns.push(skill.name.toUpperCase());
-    $.each(skill.keywords, (rowIndex, keyword) => {
-      if (!rows[rowIndex]) rows[rowIndex] = [];
-      rows[rowIndex][columnIndex] = keyword;
+  $.each(skills, (tableIndex, skill) => {
+    let rows = [];
+
+    $.each(skill.keywords, (rowIndex, keyword) => (rows[rowIndex] = [keyword]));
+    pdf.autoTable({
+      head: [[skill.name.toUpperCase()]],
+      body: rows,
+      startY: finalYTable - 10,
+      margin: { left: margins.left + (3 / 4) * margins.width },
+      headStyles: {
+        font: "times",
+        fontStyle: "bold",
+        fontSize: 9,
+        textColor: [255, 255, 255],
+        fillColor: [22, 161, 185],
+        halign: "center"
+      },
+      styles: {
+        font: "times",
+        cellPadding: 3,
+        cellWidth: margins.width / 4,
+        halign: "center",
+        fillColor: [248, 249, 250],
+        textColor: [0, 0, 0]
+      },
+      alternateRowStyles: {
+        fillColor: [248, 249, 250]
+      }
     });
+    finalYTable = pdf.previousAutoTable.finalY + 10;
   });
 
-  pdf.autoTable({
-    head: [columns],
-    body: rows,
-    startY: startYSkills - 10,
-    margin: { left: margins.width / 2 + 50 },
-    headStyles: {
-      font: font.REGULAR,
-      fontStyle: "bold",
-      fontSize: 9,
-      textColor: [255, 255, 255],
-      fillColor: [22, 161, 185],
-      halign: "center",
-      lineWidth: 1,
-      lineColor: [248, 249, 250]
-    },
-    styles: {
-      font: font.REGULAR,
-      fontSize: 10,
-      fontStyle: "normal",
-      cellPadding: { top: 3, right: 5, bottom: 3, left: 10 },
-      fillColor: [248, 249, 250],
-      fontSize: 9,
-      textColor: [0, 0, 0]
-    },
-    alternateRowStyles: {
-      fillColor: [248, 249, 250]
-    }
-  });
+  let finalTableCriticalY = pdf.previousAutoTable.finalY + 30;
 
-  const finalYSkills = pdf.previousAutoTable.finalY;
-  finalY = finalYSummary > finalYSkills ? finalYSummary : finalYSkills;
-
+  //work experience
   const jobs = parser.parseWorkExperience();
   $.each(jobs, (index, job) => {
     props.length = 0;
     if (index == 0) {
-      props.push(...insertTitle("EXPERIENCE"));
+      props.push(...insertTitle("EXPERIENCE", 16, color.BLUE, 10));
     }
     props.push({
       contents: job.company,
       fontSize: 12,
       fontStyle: "bold"
     });
-    props.push({ contents: job.position, fontSize: 12 });
+    props.push({ contents: job.position, fontSize: 12, fontStyle: "bold" });
     props.push({
       contents: `${job.startDate} - ${job.endDate}`,
-      fontSize: 10,
+      fontSize: 12,
       marginBottom: 5
     });
+
+    let jobsMargins =
+      finalY < finalTableCriticalY
+        ? { ...margins, width: (3 / 4) * margins.width - margins.left }
+        : margins;
+
+    let startY = 0;
+
     const highlights = job.highlights;
-    highlights.forEach((highlight, i) =>
+    let highlightsMargins = { ...jobsMargins, width: jobsMargins.width - 20 }; // -20 because we will insert a bullet
+
+    highlights.forEach((highlight, i) => {
       props.push({
-        contents: highlight,
+        contents: `${highlight}`,
         fontSize: 12,
         marginBottom:
-          index == jobs.length - 1 ? 0 : i < highlights.length - 1 ? 0 : 10
-      })
-    );
-    const startY = index > 0 ? finalY : finalY + 40;
-    finalY = renderText(pdf, props, margins.left, startY, margins);
+          i < highlights.length - 1 ? 2 : index == jobs.length - 1 ? 0 : 10,
+        printed: i == 0 ? false : true
+      });
+      if (i == 0) {
+        startY = index == 0 ? finalY + 30 : finalY;
+        finalY = renderText(pdf, props, margins.left, startY, jobsMargins);
+        while (props.length > 1) {
+          //only first highlight left in array
+          props.shift();
+        }
+        props[0].printed = true;
+      }
+
+      //table is passed by || new page
+      if (
+        finalTableCriticalY > 0 &&
+        (finalY > finalTableCriticalY || finalY < startY)
+      ) {
+        finalTableCriticalY = 0;
+        highlightsMargins = {
+          ...margins,
+          width: margins.width - 20 // -20 because we will insert a bullet
+        };
+      }
+
+      startY = finalY;
+      finalY = renderText(
+        pdf,
+        props,
+        margins.left + 20,
+        startY,
+        highlightsMargins
+      );
+      //add bullet
+      pdf
+        .setFont("zapfdingbats")
+        .setFontSize(8)
+        .text(margins.left, finalY < startY ? margins.top : startY, "l");
+      props.length = 0;
+    });
   });
 
   //education
   const education = parser.parseEducation();
   props.length = 0;
-  props.push(...insertTitle("EDUCATION"));
+  props.push(...insertTitle("EDUCATION", 16, color.BLUE, 10));
   $.each(education, (index, edu) => {
     props.push({
       contents: `${edu.institution}, ${edu.area}`,
@@ -335,7 +369,7 @@ $("#pdf-icon").on("click", () => {
   //certificates
   const certificates = parser.parseCertificates();
   props.length = 0;
-  props.push(...insertTitle("CERTIFICATES"));
+  props.push(...insertTitle("CERTIFICATES", 16, color.BLUE, 10));
   $.each(certificates, (index, cert) => {
     props.push({
       contents: cert.title,
@@ -349,7 +383,7 @@ $("#pdf-icon").on("click", () => {
   //LANGUAGES
   const languages = parser.parseLanguages();
   props.length = 0;
-  props.push(...insertTitle("LANGUAGES"));
+  props.push(...insertTitle("LANGUAGES", 16, color.BLUE, 10));
   $.each(languages, (index, lang) => {
     props.push({
       contents: lang.language,
