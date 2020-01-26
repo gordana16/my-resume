@@ -70,16 +70,18 @@ $("#linkedIn-t").html(
 const skills = mergeStringIntoObjArr(resume.skills, "name", "keywords");
 $.each(skills, (index, skill) => {
   let $label = $(
-    `<span class="badge badge-pill badge-main pl-2">${skill.name}</span>`
+    `<span class="badge badge-pill badge-main pl-2 mr-lg-4">${skill.name}</span>`
   );
   let $list = $("<ul class='pl-2 pl-lg-0 mr-lg-n4'></ul>");
   $.each(stringToArr(skill.keywords), (index, keyword) => {
-    $(`<li><span>${keyword}</span></li>`).appendTo($list);
+    $(
+      `<li class="py-lg-1"><span class="px-lg-1">${keyword}</span></li>`
+    ).appendTo($list);
   });
 
   let $skills = $(`<div class="col-12 col-md-4 col-lg-12 pl-2 pl-lg-3">
-<div class="row align-items-center py-lg-4 mr-lg-n4">
-  <div class="skills-badge col-12 col-lg-5 px-lg-0 ml-lg-n4 ml-xl-n3 mr-lg-n3 mb-lg-4 order-lg-last">  
+<div class="row align-items-center py-lg-3 mr-lg-n4">
+  <div class="skills-badge col-12 col-lg-5 px-lg-0 ml-lg-n4 ml-xl-n3 mr-lg-n4 mb-lg-4 order-lg-last">  
   </div>
   <div class='skills-list col-12 col-lg-7 order-lg-first'> 
   </div>
@@ -104,13 +106,13 @@ const work = mergeStringIntoObjArr(
 let $jobs = $("#experience-list");
 $.each(work, (index, exp) => {
   const highlights = stringToArr(exp.highlights).map(
-    highlight => `<p class="mt-1 mb-0">${highlight}</p>`
+    highlight => `<li class="mt-1 mb-0">${highlight}</li>`
   );
   $(`<div class="mb-3">
   <h5>${exp.company}</h5>
   <h6>${exp.position}</h6>
   <p class="start-end mb-0">${exp.startDate} - ${exp.endDate}</p>
-  ${highlights.join(" ")} 
+  ${highlights.join(" ")}.wrap("ul") ;
   </div>`).appendTo($jobs);
 });
 $jobs.appendTo($("#experience"));
