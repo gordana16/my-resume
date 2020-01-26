@@ -112,7 +112,9 @@ $.each(work, (index, exp) => {
   <h5>${exp.company}</h5>
   <h6>${exp.position}</h6>
   <p class="start-end mb-0">${exp.startDate} - ${exp.endDate}</p>
-  ${highlights.join(" ")}.wrap("ul") ;
+  <ul>
+  ${highlights.join(" ")}
+  </ul>
   </div>`).appendTo($jobs);
 });
 $jobs.appendTo($("#experience"));
