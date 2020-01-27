@@ -164,16 +164,18 @@ $.getJSON(`https://api.github.com/users/${username}/repos`, gitRepos => {
       return new Date(r2.created_at) - new Date(r1.created_at);
     });
   $.each(actualRepos, (index, repo) => {
-    $(`<div class="col-md-6">
-    <div class="card mb-4 bg-side">
-    <div class="card-body">
+    $(`<div class="col-md-6 d-flex">
+      <div class="card mb-4 flex-fill bg-side">
+        <div class="card-body d-flex flex-column justify-content-between">
+        <div class="mb-3">
         <h5 class="card-title">${repo.name}</h5>
-        <p class="card-text">${repo.description || ""}</p>
-        <a href=${
-          repo.html_url
-        } class="btn btn-main" target="_blank">See repo</a>
+        <p class="card-text">${repo.description || ""}</p>    
+        </div>         
+          <a href=${
+            repo.html_url
+          } class="btn btn-main align-self-start" target="_blank">See repo</a>
+        </div>
       </div>
-    </div>
     </div>
     `).appendTo($repos);
   });
