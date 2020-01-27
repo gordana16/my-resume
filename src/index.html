@@ -88,88 +88,91 @@
       </div>
       <div class="col-12 col-lg-9">
         <div class="row main-row mx-0">
-          <div id="summary" class="col-lg-9 bg-white">
-            <div class="py-4">
-              <h1 class="name"></h1>
-              <h2 id="label"></h2>
-            </div>
-
-            <p id="basic-summary" class="text-md-newspapers text-left"></p>
-            <div id="table-ignore" class="row py-4">
-              <div class=" col-12 col-lg-6 ">
-                <table id="my-table-1" class="table mb-0 mb-lg-3">
-                  <tbody>
-                    <tr>
-                      <th class="w-sm-50 w-lg-25">Name</th>
-                      <td class="name"></td>
-                    </tr>
-                    <tr>
-                      <th class="w-sm-50 w-lg-25">Email</th>
-                      <td id="email"></td>
-                    </tr>
-                    <tr>
-                      <th class="w-sm-50 w-lg-25">Phone</th>
-                      <td id="phone"></td>
-                    </tr>
-                    <tr class="d-none">
-                      <th>LinkedIn</th>
-                      <td id="linkedIn-t"></td>
-                    </tr>
-                  </tbody>
-                </table>
+          <div class="col-lg-9 bg-white">
+            <div id="summary">
+              <div class="py-4">
+                <h1 class="name"></h1>
+                <h2 id="label"></h2>
               </div>
-              <div class=" col-12 col-lg-6 ">
-                <table id="my-table-2" class="table">
-                  <tbody>
-                    <tr>
-                      <th class="w-sm-30 w-lg-25">Address</th>
-                      <td id="address" class="pr-lg-0"></td>
-                    </tr>
-                    <tr>
-                      <th class="w-sm-50 w-lg-25">City</th>
-                      <td id="city"></td>
-                    </tr>
-                    <tr>
-                      <th class="w-sm-50 w-lg-25">Region</th>
-                      <td id="region"></td>
-                    </tr>
-                    <tr class="d-none">
-                      <th>Github</th>
-                      <td id="github-t"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <div id="skills" class="col-12 col-lg-3 px-lg-0 bg-side ml-lg-4 mr-lg-n4">
-            <div class="py-2 pl-2 pr-lg-0">
-              <span id="skills-title">Professional Skills</span>
-              <div id="skills-list" class="row py-2 align-items-start">
+              <p id="basic-summary" class="text-md-newspapers text-left mb-4"></p>
+              <div class="row pt-4">
+                <div class=" col-12 col-lg-6 ">
+                  <table id="my-table-1" class="table mb-0 mb-lg-3">
+                    <tbody>
+                      <tr>
+                        <th class="w-sm-50 w-lg-25">Name</th>
+                        <td class="name"></td>
+                      </tr>
+                      <tr>
+                        <th class="w-sm-50 w-lg-25">Email</th>
+                        <td id="email"></td>
+                      </tr>
+                      <tr>
+                        <th class="w-sm-50 w-lg-25">Phone</th>
+                        <td id="phone"></td>
+                      </tr>
+                      <tr class="d-none">
+                        <th>LinkedIn</th>
+                        <td id="linkedIn-t"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class=" col-12 col-lg-6 ">
+                  <table id="my-table-2" class="table">
+                    <tbody>
+                      <tr>
+                        <th class="w-sm-30 w-lg-25">Address</th>
+                        <td id="address" class="pr-lg-0"></td>
+                      </tr>
+                      <tr>
+                        <th class="w-sm-50 w-lg-25">City</th>
+                        <td id="city"></td>
+                      </tr>
+                      <tr>
+                        <th class="w-sm-50 w-lg-25">Region</th>
+                        <td id="region"></td>
+                      </tr>
+                      <tr class="d-none">
+                        <th>Github</th>
+                        <td id="github-t"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
+            <div id="skills" class="d-lg-none mt-5">
+              <h3>Professional Skills</h3>
+              <div class="skills row pl-md-4 mt-4">
+              </div>
+            </div>
+            <div id="experience" class="mt-4 mt-lg-5">
+              <h3>Experience</h3>
+              <div id="experience-list" class="mt-4"></div>
+            </div>
+            <div id="education" class="mt-5">
+              <h3>Education</h3>
+              <div id="education-list" class="mt-4 mb-5"></div>
+            </div>
+            <div id="certificates">
+              <h3>Certificates</h3>
+              <div id="certificates-list" class="mt-4 mb-5"></div>
+            </div>
+            <div id="languages">
+              <h3>Languages</h3>
+              <div id="languages-list" class="mt-4 mb-5"></div>
+            </div>
+            <div id="github">
+              <h3>GitHub Repos</h3>
+            </div>
           </div>
-
-          <div id="experience" class="col-12 col-lg-9 bg-white">
-            <h3>Experience</h3>
-            <div id="experience-list" class="mt-4 mb-5"></div>
-          </div>
-          <div id="education" class="col-12 col-lg-9 bg-white">
-            <h3>Education</h3>
-            <div id="education-list" class="mt-4 mb-5"></div>
-          </div>
-          <div id="certificates" class="col-12 col-lg-9 bg-white">
-            <h3>Certificates</h3>
-            <div id="certificates-list" class="mt-4 mb-5"></div>
-          </div>
-          <div id="languages" class="col-12 col-lg-9 bg-white">
-            <h3>Languages</h3>
-            <div id="languages-list" class="mt-4 mb-5"></div>
-          </div>
-          <div id="github" class="col-12 col-lg-9 bg-white">
-            <h3>GitHub Repos</h3>
-
+          <div class="col-12 col-lg-3 px-lg-0 ml-lg-4 mr-lg-n4 d-none d-lg-block">
+            <div class="py-2 pl-2 pr-lg-0 bg-side">
+              <span class="skills-title">Professional Skills</span>
+              <div class="skills row py-2 align-items-start">
+              </div>
+            </div>
           </div>
         </div>
       </div>

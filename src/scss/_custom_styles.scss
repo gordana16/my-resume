@@ -61,12 +61,6 @@ h3 {
   color: theme-color-level("main");
 }
 
-h4 {
-  font-size: 0.9rem;
-  color: $gray-800;
-  font-weight: 700;
-}
-
 .icons {
   list-style: none;
   padding: 0;
@@ -102,14 +96,18 @@ h4 {
   font-size: 0.75 * $font-size-base;
 }
 
-.start-end {
+.skills-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: $gray-800;
+  font-weight: 700;
+}
+
+.start-end-date {
   font-size: 1rem;
 }
 
 @include media-breakpoint-up(lg) {
-  .table td {
-    font-size: 1.1rem;
-  }
   .skills-badge {
     transform: rotate(90deg);
     min-width: 7.5rem;
@@ -139,10 +137,13 @@ h4 {
     background-color: $white !important;
   }
   .skills-list ul {
-    font-size: $font-size-base;
+    font-size: 1rem;
+    line-height: 1.8;
   }
 
   .badge {
-    font-size: $font-size-base;
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 6px;
   }
 }

@@ -1,16 +1,10 @@
-import sizes from "./scss/index.scss";
+import "./scss/index.scss";
 import "bootstrap";
 import "jquery-ui";
 import "./createPdf/htmlToPdf";
 import { resume } from "./config";
 import { mergeStringIntoObjArr, stringToArr } from "./utils";
 import profilePic from "./profile-pic.jpg";
-
-if ($(window).outerWidth() >= parseInt(sizes.lg)) {
-  $("#skills-title").wrap("<h4></h4>");
-} else {
-  $("#skills-title").wrap("<h3></h3>");
-}
 
 $("body").css("padding-top", $(".navbar").outerHeight());
 
@@ -89,7 +83,7 @@ $.each(skills, (index, skill) => {
 </div>`);
   $label.appendTo($skills.find(".skills-badge"));
   $list.appendTo($skills.find(".skills-list"));
-  $skills.appendTo($("#skills-list"));
+  $skills.appendTo($(".skills"));
 });
 
 $(".skills-list ul li:nth-child(odd)").addClass("alternate-odd");
@@ -111,7 +105,7 @@ $.each(work, (index, exp) => {
   $(`<div class="mb-3">
   <h5>${exp.company}</h5>
   <h6>${exp.position}</h6>
-  <p class="start-end mb-0">${exp.startDate} - ${exp.endDate}</p>
+  <p class="start-end-date mb-0">${exp.startDate} - ${exp.endDate}</p>
   <ul>
   ${highlights.join(" ")}
   </ul>
