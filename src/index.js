@@ -1,9 +1,8 @@
 import "./scss/index.scss";
 import "bootstrap";
 import "jquery-ui";
+import * as parser from "./utils";
 import "./createPdf/htmlToPdf";
-import { resume } from "./config";
-import { mergeStringIntoObjArr, stringToArr } from "./utils";
 import profilePic from "./profile-pic.jpg";
 
 $("body").css("padding-top", $(".navbar").outerHeight());
@@ -27,19 +26,14 @@ $(".nav-link").on("click", function() {
 
 //summary
 $("#profile-pic").attr("src", profilePic);
-$("#basic-summary").html(resume.basics.summary);
-$(".name").html(resume.basics.name);
-$("#label").html(resume.basics.label);
-$("#email").html(resume.basics.email);
-$("#phone").html(resume.basics.phone);
+$("#basic-summary").html(parser.getSummary());
+$(".name").html(parser.getName());
+$("#label").html(parser.getLabel());
+$("#email").html(parser.getEmail());
+$("#phone").html(parser.getPhone());
 
-const profiles = mergeStringIntoObjArr(
-  resume.basics.profiles,
-  "network",
-  "url",
-  "username"
-);
-profiles.push({ network: "email", url: `mailto:${resume.basics.email}` });
+const profiles = parser.parseProfiles();
+profiles.push({ network: "email", url: `mailto:${parser.getEmail()}` });
 
 $(".icons a").on("click", function() {
   const networkClass = this.className;
@@ -47,12 +41,12 @@ $(".icons a").on("click", function() {
 });
 
 $(".mail").on("click", function() {
-  this.href = `mailto:${resume.basics.email}`;
+  this.href = `mailto:${parser.getEmail()}`;
 });
 
-$("#address").html(resume.basics.location.address);
-$("#city").html(resume.basics.location.city);
-$("#region").html(resume.basics.location.region);
+$("#address").html(parser.getAddress());
+$("#city").html(parser.getCity());
+$("#region").html(parser.getRegion());
 $("#github-t").html(
   profiles.find(profile => profile["network"] === "github").url
 );
@@ -61,13 +55,13 @@ $("#linkedIn-t").html(
 );
 
 //skills
-const skills = mergeStringIntoObjArr(resume.skills, "name", "keywords");
+const skills = parser.parseSkills();
 $.each(skills, (index, skill) => {
   let $label = $(
     `<span class="badge badge-pill badge-main pl-2 mr-lg-4">${skill.name}</span>`
   );
   let $list = $("<ul class='pl-2 pl-lg-0 mr-lg-n4'></ul>");
-  $.each(stringToArr(skill.keywords), (index, keyword) => {
+  $.each(skill.keywords, (index, keyword) => {
     $(
       `<li class="py-lg-1"><span class="px-lg-1">${keyword}</span></li>`
     ).appendTo($list);
@@ -89,17 +83,10 @@ $.each(skills, (index, skill) => {
 $(".skills-list ul li:nth-child(odd)").addClass("alternate-odd");
 
 //work-experience
-const work = mergeStringIntoObjArr(
-  resume.work,
-  "company",
-  "position",
-  "startDate",
-  "endDate",
-  "highlights"
-);
+const work = parser.parseWorkExperience();
 let $jobs = $("#experience-list");
 $.each(work, (index, exp) => {
-  const highlights = stringToArr(exp.highlights).map(
+  const highlights = exp.highlights.map(
     highlight => `<li class="mt-1 mb-0">${highlight}</li>`
   );
   $(`<div class="mb-3">
@@ -114,12 +101,7 @@ $.each(work, (index, exp) => {
 $jobs.appendTo($("#experience"));
 
 //education
-const education = mergeStringIntoObjArr(
-  resume.education,
-  "institution",
-  "area",
-  "studyType"
-);
+const education = parser.parseEducation();
 
 let $eduList = $("#education-list");
 $.each(education, (index, edu) => {
@@ -131,7 +113,7 @@ $.each(education, (index, edu) => {
 $eduList.appendTo($("#education"));
 
 //certificates
-const certificates = mergeStringIntoObjArr(resume.certificates, "title");
+const certificates = parser.parseCertificates();
 let $certs = $("#certificates-list");
 $.each(certificates, (index, cert) => {
   $(`<h5>${cert.title}</h5>`).appendTo($certs);
@@ -139,11 +121,7 @@ $.each(certificates, (index, cert) => {
 $certs.appendTo($("#certificates"));
 
 //languages
-const languages = mergeStringIntoObjArr(
-  resume.languages,
-  "language",
-  "fluency"
-);
+const languages = parser.parseLanguages();
 let $languages = $("#languages-list");
 $.each(languages, (index, l) => {
   $(`<div class="mb-3">
