@@ -1,6 +1,6 @@
 import * as jsPDF from "jspdf";
-import parser from "../ResumeParser";
 import "jspdf-autotable";
+import * as parser from "../utils";
 
 //colors
 const color = {
@@ -163,7 +163,7 @@ $("#pdf-icon").on("click", () => {
   };
   const props = [];
 
-  const name = parser.parseName();
+  const name = parser.getName();
   const firstName = parser.getFirstName().toUpperCase();
   const lastName = parser.getLastName().toUpperCase();
   props.push(
@@ -214,7 +214,7 @@ $("#pdf-icon").on("click", () => {
   props.length = 0;
   props.push(...insertTitle("SUMMARY", 16, color.BLUE, 10));
   props.push({
-    contents: parser.parseSummary(),
+    contents: parser.getSummary(),
     fontSize: 12,
     marginBottom: 5
   });

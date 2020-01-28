@@ -17,7 +17,7 @@ module.exports = (env, argv) => {
     },
     devServer: {
       //default dir is "/dist"
-      // writeToDisk: true,
+      writeToDisk: true,
       open: true
     },
     module: {
