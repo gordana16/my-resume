@@ -3,7 +3,6 @@ import "bootstrap";
 import "jquery-ui";
 import * as parser from "./utils";
 import "./createPdf/htmlToPdf";
-import profilePic from "./profile-pic.jpg";
 
 $("body").css("padding-top", $(".navbar").outerHeight());
 
@@ -25,7 +24,6 @@ $(".nav-link").on("click", function() {
 });
 
 //summary
-$("#profile-pic").attr("src", profilePic);
 $("#basic-summary").html(parser.getSummary());
 $(".name").html(parser.getName());
 $("#label").html(parser.getLabel());
