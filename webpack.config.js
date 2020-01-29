@@ -1,4 +1,3 @@
-const path = require("path");
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -17,7 +16,7 @@ module.exports = (env, argv) => {
     },
     devServer: {
       //default dir is "/dist"
-      writeToDisk: true,
+      // writeToDisk: true,
       open: true
     },
     module: {
@@ -45,18 +44,6 @@ module.exports = (env, argv) => {
               loader: "sass-loader"
             }
           ]
-        },
-
-        {
-          test: /\.(png|svg|jpg|gif)$/,
-          use: [
-            {
-              loader: "file-loader",
-              options: {
-                name: "[name].[ext]"
-              }
-            }
-          ]
         }
       ]
     },
@@ -74,7 +61,7 @@ module.exports = (env, argv) => {
       }),
       new CopyPlugin([
         {
-          from: "./src/sprite.svg",
+          from: "./src/assets",
           to: ""
         }
       ]),
