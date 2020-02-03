@@ -375,8 +375,8 @@ $("#pdf-icon").on("click", () => {
   props.push(...insertTitle("EDUCATION", 16, color.BLUE, 10));
   $.each(education, (index, edu) => {
     props.push({
-      contents: `${edu.institution}, ${edu.area}`,
-      fontSize: 14,
+      contents: `${edu.institution}${edu.area ? `, ${edu.area}` : ""}`,
+      fontSize: 12,
       fontStyle: "bold"
     });
     props.push({
