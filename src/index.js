@@ -87,9 +87,7 @@ $.each(work, (index, exp) => {
   const highlights = exp.highlights.map(
     highlight => `<li class="mt-1 mb-0">${highlight}</li>`
   );
-  $(`<div class="mb-5">
-  
- 
+  $(`<div class="mb-4">   
   <h5 class="company-name font-weight-bold mb-0">${exp.company}</h5>
   <p class="company-profile font-weight-bold mb-1">${exp.companyProfile}</p> 
   <p class="mb-1">${exp.position}</p>
@@ -107,8 +105,10 @@ const education = parser.parseEducation();
 let $eduList = $("#education-list");
 $.each(education, (index, edu) => {
   $(`<div class="mb-3">
-  <h5>${edu.studyType}, ${edu.area}</h5> 
-  <h6>${edu.institution}</h6>  
+  <p class="font-weight-bold mb-0">${edu.studyType}${
+    edu.area ? `, ${edu.area}` : ""
+  }</p> 
+  <p>${edu.institution}</p>  
   </div>`).appendTo($eduList);
 });
 $eduList.appendTo($("#education"));
@@ -117,7 +117,7 @@ $eduList.appendTo($("#education"));
 const certificates = parser.parseCertificates();
 let $certs = $("#certificates-list");
 $.each(certificates, (index, cert) => {
-  $(`<h5>${cert.title}</h5>`).appendTo($certs);
+  $(`<p class="font-weight-bold mb-2">${cert.title}</p>`).appendTo($certs);
 });
 $certs.appendTo($("#certificates"));
 
@@ -125,9 +125,9 @@ $certs.appendTo($("#certificates"));
 const languages = parser.parseLanguages();
 let $languages = $("#languages-list");
 $.each(languages, (index, l) => {
-  $(`<div class="mb-3">
-  <h5>${l.language}</h5> 
-  <h6>${l.fluency}</h6> 
+  $(`<div class="mb-2">
+  <p class="font-weight-bold mb-0">${l.language}</p> 
+  <p class="mb-0">${l.fluency}</p> 
 </div>`).appendTo($languages);
 });
 $languages.appendTo($("#languages"));

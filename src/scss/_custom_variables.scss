@@ -3,9 +3,7 @@
 
 $theme-colors: (
   "main": #618057,
-  // "side": #7a9b7032
-    // "side": #d1dfb8
-    "side": #dbe9c2 // "side": #cfdcb8
+  "side": #dbe9c2 //"side": #e9f2cb
 );
 
 $container-max-widths: (
@@ -15,8 +13,7 @@ $container-max-widths: (
   xl: 1200px
 );
 
-$body-bg: #fafad2;
-//$body-bg: #f2eecb;
+$body-bg: #f2eecb;
 $font-family-sans-serif: "Roboto", sans-serif;
 // $font-size-base: 1.2rem;
 $navbar-nav-link-padding-x: 1rem;
