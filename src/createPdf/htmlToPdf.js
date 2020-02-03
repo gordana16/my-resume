@@ -226,7 +226,7 @@ $("#pdf-icon").on("click", () => {
     marginBottom: 5
   });
 
-  const startYSummary = finalY + 50;
+  const startYSummary = finalY + 70;
   finalY = renderText(pdf, props, margins.left, startYSummary, {
     ...margins,
     width: (3 / 4) * margins.width - margins.left
