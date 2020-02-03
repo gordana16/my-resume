@@ -54,9 +54,6 @@ h2 {
   font-weight: 300;
 }
 
-// @include headings(3, 4) {
-//   color: theme-color-level("main");
-// }
 h3 {
   color: theme-color-level("main");
 }
@@ -102,7 +99,9 @@ h3 {
   color: $gray-800;
   font-weight: 700;
 }
-
+.company-profile {
+  font-size: 0.9rem;
+}
 .start-end-date {
   font-size: 1rem;
 }

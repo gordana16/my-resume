@@ -3,10 +3,6 @@ import { mergeStringIntoObjArr, stringToArr } from "./helper";
 
 export const getName = () => resume.basics.name;
 
-export const getFirstName = () => getName().substring(0, name.indexOf(" "));
-
-export const getLastName = () => getName().substring(name.indexOf(" ") + 1);
-
 export const getLabel = () => resume.basics.label;
 
 export const getEmail = () => resume.basics.email;
@@ -35,6 +31,7 @@ export const parseWorkExperience = () => {
   const exps = mergeStringIntoObjArr(
     resume.work,
     "company",
+    "companyProfile",
     "position",
     "startDate",
     "endDate",
