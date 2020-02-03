@@ -4,7 +4,7 @@ export const resume = {
     label: process.env.LABEL,
     email: process.env.EMAIL,
     phone: process.env.PHONE,
-    website: process.env.PORTFOLIO,
+    website: process.env.WEBSITE,
     summary: process.env.SUMMARY,
     location: {
       address: process.env.ADDRESS,

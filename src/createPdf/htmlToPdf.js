@@ -215,7 +215,6 @@ $("#pdf-icon").on("click", () => {
   );
 
   props.length = 0;
-  console.log("website", process.env);
   props.push({ contents: `Portfolio: ${parser.getWebsite()}` });
   finalY = renderTextLine(pdf, props, finalY, margins, "center");
 
