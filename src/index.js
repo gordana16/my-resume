@@ -61,7 +61,7 @@ $.each(skills, (index, skill) => {
   let $list = $("<ul class='pl-2 pl-lg-0 mr-lg-n4'></ul>");
   $.each(skill.keywords, (index, keyword) => {
     $(
-      `<li class="py-lg-1"><span class="px-lg-1">${keyword}</span></li>`
+      `<li class="py-lg-1"><div class="px-lg-1">${keyword}</div></li>`
     ).appendTo($list);
   });
 
@@ -87,10 +87,13 @@ $.each(work, (index, exp) => {
   const highlights = exp.highlights.map(
     highlight => `<li class="mt-1 mb-0">${highlight}</li>`
   );
-  $(`<div class="mb-3">
-  <h5>${exp.company}</h5>
-  <h6>${exp.position}</h6>
-  <p class="start-end-date mb-0">${exp.startDate} - ${exp.endDate}</p>
+  $(`<div class="mb-5">
+  
+ 
+  <h5 class="company-name font-weight-bold mb-0">${exp.company}</h5>
+  <p class="company-profile font-weight-bold mb-1">${exp.companyProfile}</p> 
+  <p class="mb-1">${exp.position}</p>
+  <p class="start-end-date">${exp.startDate} - ${exp.endDate}</p>
   <ul>
   ${highlights.join(" ")}
   </ul>

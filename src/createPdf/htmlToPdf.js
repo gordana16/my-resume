@@ -77,7 +77,7 @@ const renderText = (doc, props, x, y, margins) => {
     if (typeof contents == "undefined") return y;
     if (typeof fontName == "undefined") fontName = "times";
     if (typeof fontStyle == "undefined") fontStyle = "normal";
-    if (typeof fontSize == "undefined") fontSize = doc.getFontSize();
+    if (typeof fontSize == "undefined") fontSize = 12;
     if (typeof fontColor == "undefined") fontColor = color.DARK_GREY;
     if (typeof marginBottom == "undefined") marginBottom = 0;
     if (typeof printed == "undefined") printed = true;
@@ -163,22 +163,29 @@ $("#pdf-icon").on("click", () => {
   };
   const props = [];
 
-  const name = parser.getName();
-  const firstName = parser.getFirstName().toUpperCase();
-  const lastName = parser.getLastName().toUpperCase();
+  const fullName = parser.getName();
+  const nameArr = fullName.split(/\s+/);
+  const firstName = nameArr
+    .slice(0, -1)
+    .join(" ")
+    .toUpperCase();
+  const lastName = nameArr.pop().toUpperCase();
   props.push(
     { contents: firstName, fontColor: color.BLUE },
     { contents: lastName }
   );
+
   pdf.setFontSize(26);
   finalY = renderTextLine(pdf, props, 50, margins, "center");
 
   pdf.setFontSize(12);
 
   props.length = 0;
-  props.push({ contents: parser.getEmail() });
-  props.push({ contents: `${parser.getAddress()}, ${parser.getCity()}` });
-  props.push({ contents: parser.getPhone() });
+  props.push(
+    { contents: parser.getEmail() },
+    { contents: `${parser.getAddress()}, ${parser.getCity()}` },
+    { contents: parser.getPhone() }
+  );
 
   finalY = renderTextLine(
     pdf,
@@ -219,7 +226,7 @@ $("#pdf-icon").on("click", () => {
     marginBottom: 5
   });
 
-  const startYSummary = finalY + 40;
+  const startYSummary = finalY + 50;
   finalY = renderText(pdf, props, margins.left, startYSummary, {
     ...margins,
     width: (3 / 4) * margins.width - margins.left
@@ -281,15 +288,29 @@ $("#pdf-icon").on("click", () => {
     }
     props.push({
       contents: job.company,
-      fontSize: 12,
+      fontSize: 14,
       fontStyle: "bold"
     });
-    props.push({ contents: job.position, fontSize: 12, fontStyle: "bold" });
-    props.push({
-      contents: `${job.startDate} - ${job.endDate}`,
-      fontSize: 12,
-      marginBottom: 5
-    });
+    if (job.companyProfile) {
+      props.push({
+        contents: job.companyProfile,
+        fontSize: 12,
+        marginBottom: 3
+      });
+    }
+    props.push(
+      {
+        contents: job.position,
+        fontSize: 12,
+        fontStyle: "bold",
+        marginBottom: 3
+      },
+      {
+        contents: `${job.startDate} - ${job.endDate}`,
+        fontSize: 12,
+        marginBottom: 10
+      }
+    );
 
     let jobsMargins =
       finalY < finalTableCriticalY
@@ -306,11 +327,11 @@ $("#pdf-icon").on("click", () => {
         contents: `${highlight}`,
         fontSize: 12,
         marginBottom:
-          i < highlights.length - 1 ? 2 : index == jobs.length - 1 ? 0 : 10,
+          i < highlights.length - 1 ? 2 : index === jobs.length - 1 ? 0 : 30,
         printed: i == 0 ? false : true
       });
       if (i == 0) {
-        startY = index == 0 ? finalY + 30 : finalY;
+        startY = index === 0 ? finalY + 30 : finalY;
         finalY = renderText(pdf, props, margins.left, startY, jobsMargins);
         while (props.length > 1) {
           //only first highlight left in array
@@ -355,13 +376,13 @@ $("#pdf-icon").on("click", () => {
   $.each(education, (index, edu) => {
     props.push({
       contents: `${edu.institution}, ${edu.area}`,
-      fontSize: 12,
+      fontSize: 14,
       fontStyle: "bold"
     });
     props.push({
       contents: edu.studyType,
       fontSize: 12,
-      marginBottom: index == education.length - 1 ? 0 : 5
+      marginBottom: index === education.length - 1 ? 0 : 10
     });
   });
   finalY = renderText(pdf, props, margins.left, finalY + 30, margins);
@@ -375,7 +396,7 @@ $("#pdf-icon").on("click", () => {
       contents: cert.title,
       fontSize: 12,
       fontStyle: "bold",
-      marginBottom: index == certificates.length - 1 ? 0 : 5
+      marginBottom: index === certificates.length - 1 ? 0 : 5
     });
   });
   finalY = renderText(pdf, props, margins.left, finalY + 30, margins);
@@ -399,5 +420,5 @@ $("#pdf-icon").on("click", () => {
 
   renderFooter(pdf, margins, name);
 
-  pdf.save(`${name.replace(/ /g, "")}-CV.pdf`);
+  pdf.save(`${fullName.replace(/ /g, "")}-CV.pdf`);
 });

@@ -1,7 +1,7 @@
 export const mergeStringIntoObjArr = (someString, ...keys) => {
   const merged = {};
   return someString.split(/,(?!\s)/).map(str => {
-    const values = str.split(/&(?!\s)/);
+    const values = str.split(/\^(?!\s)/);
     let localMerged = {};
     localMerged = keys.reduce(
       (obj, key, i) => ({ ...obj, [key]: values[i] }),
