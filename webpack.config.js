@@ -71,6 +71,11 @@ module.exports = (env, argv) => {
       alias: {
         "jquery-ui": "jquery-ui/ui/effect.js"
       }
+    },
+    performance: {
+      hints: false,
+      maxEntrypointSize: 700000,
+      maxAssetSize: 600000
     }
   };
 };
