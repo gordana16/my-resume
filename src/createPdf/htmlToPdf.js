@@ -21,8 +21,8 @@ const renderTextLine = (
 ) => {
   const chunks = props.map(prop => {
     let { contents, fontColor } = prop;
-    if (typeof contents == "undefined") return y;
-    if (typeof fontColor == "undefined") fontColor = color.DARK_GREY;
+    if (typeof contents === "undefined") return y;
+    if (typeof fontColor === "undefined") fontColor = color.DARK_GREY;
     return {
       contents,
       fontColor,
@@ -74,13 +74,13 @@ const renderText = (doc, props, x, y, margins) => {
       marginBottom,
       printed
     } = prop;
-    if (typeof contents == "undefined") return y;
-    if (typeof fontName == "undefined") fontName = "times";
-    if (typeof fontStyle == "undefined") fontStyle = "normal";
-    if (typeof fontSize == "undefined") fontSize = 12;
-    if (typeof fontColor == "undefined") fontColor = color.DARK_GREY;
-    if (typeof marginBottom == "undefined") marginBottom = 0;
-    if (typeof printed == "undefined") printed = true;
+    if (typeof contents === "undefined") return y;
+    if (typeof fontName === "undefined") fontName = "times";
+    if (typeof fontStyle === "undefined") fontStyle = "normal";
+    if (typeof fontSize === "undefined") fontSize = 12;
+    if (typeof fontColor === "undefined") fontColor = color.DARK_GREY;
+    if (typeof marginBottom === "undefined") marginBottom = 0;
+    if (typeof printed === "undefined") printed = true;
 
     const lines = doc.splitTextToSize(contents, margins.width, {
       fontSize,
@@ -283,7 +283,7 @@ $("#pdf-icon").on("click", () => {
   const jobs = parser.parseWorkExperience();
   $.each(jobs, (index, job) => {
     props.length = 0;
-    if (index == 0) {
+    if (index === 0) {
       props.push(...insertTitle("EXPERIENCE", 16, color.BLUE, 10));
     }
     props.push({
@@ -328,9 +328,9 @@ $("#pdf-icon").on("click", () => {
         fontSize: 12,
         marginBottom:
           i < highlights.length - 1 ? 2 : index === jobs.length - 1 ? 0 : 30,
-        printed: i == 0 ? false : true
+        printed: i === 0 ? false : true
       });
-      if (i == 0) {
+      if (i === 0) {
         startY = index === 0 ? finalY + 30 : finalY;
         finalY = renderText(pdf, props, margins.left, startY, jobsMargins);
         while (props.length > 1) {
@@ -413,7 +413,7 @@ $("#pdf-icon").on("click", () => {
     });
     props.push({
       contents: lang.fluency,
-      marginBottom: index == languages.length - 1 ? 0 : 5
+      marginBottom: index === languages.length - 1 ? 0 : 5
     });
   });
   finalY = renderText(pdf, props, margins.left, finalY + 30, margins);
