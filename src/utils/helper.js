@@ -1,6 +1,6 @@
-export const mergeStringIntoObjArr = (someString, ...keys) => {
+export const mergeStringIntoObjArr = (longString, ...keys) => {
   const merged = {};
-  return someString.split(/,(?!\s)/).map(str => {
+  return longString.split(/,(?!\s)/).map(str => {
     const values = str.split(/\^(?!\s)/);
     let localMerged = {};
     localMerged = keys.reduce(
@@ -11,7 +11,7 @@ export const mergeStringIntoObjArr = (someString, ...keys) => {
   });
 };
 
-export const stringToArr = someString => {
-  const result = someString.split(/\|(?!\s)/);
+export const stringToArr = longString => {
+  const result = longString.split(/\|(?!\s)/);
   return result;
 };
